@@ -3,6 +3,9 @@ module BasicTypes
   use seq.Seq, list.List
   
   type char
+  
+  val eq (c1 c2: char) : bool
+    ensures { result <-> c1 = c2 }
     
   val constant eps : char (* used for representing the empty transitions *)
 
@@ -130,24 +133,34 @@ module NFA
     fold_st_to_ss_3rd t SS.empty
   
   
-  let rec filter_trans_eps (s: state) (t: ST.t) (nt: ST.t) : ST.t =
+  let rec filter_trans (s: state) (sym: symbol) (t: ST.t) (nt: ST.t) : ST.t 
+    variant { ST.cardinal t } 
+  =
     if ST.is_empty t then nt
     else let elem = ST.choose t in
          let (a,b,_) = elem in
-         if s = a && b = eps then filter_trans_eps s (ST.remove elem t) (ST.add elem nt)
-         else filter_trans_eps s (ST.remove elem t) nt
+         if s = a && eq b sym then filter_trans s sym (ST.remove elem t) (ST.add elem nt)
+         else filter_trans s sym (ST.remove elem t) nt
   
   (* returns the set of state s and all its states reachable by an epsilon transition, given s and an automaton *)
   let next_eps s t =
-    let trans = ST.filter (fun (a,b,c) -> s = a && b = eps) t in
+    let trans = filter_trans s eps t ST.empty in
       let nextStates = delta_get_3rd trans in	
-        States.add s nextStates
+        SS.add s nextStates
 
+  let rec fold_next_states (s: SS.t) (t: ST.t) (ns: SS.t) : SS.t
+    variant { SS.cardinal s }
+  =
+    if SS.is_empty s then ns
+    else let st = SS.choose s in
+         let nxt_sts = (next_eps st t) in
+         fold_next_states (SS.remove st s) t (SS.union nxt_sts ns)
+  
   let rec close_empty sts t = 
-    let ns = States.fold (fun st -> States.union (next_eps st t) ) sts States.empty in
-      if (States.subset ns sts) then ns else close_empty (States.union sts ns) t 
+    let ns = fold_next_states sts t SS.empty in
+      if (SS.subset ns sts) then ns else close_empty (SS.union sts ns) t 
 
   let eclose (s: state) (a: automaton) =
-    close_empty (States.singleton s) a.transitions
+    close_empty (SS.add s SS.empty) a.transitions
   
 end
