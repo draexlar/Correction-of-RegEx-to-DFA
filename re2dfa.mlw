@@ -163,4 +163,29 @@ module NFA
   let eclose (s: state) (a: automaton) =
     close_empty (SS.add s SS.empty) a.transitions
   
+  let delta (s: state) (sym: symbol) (t: ST.t) : state =
+    let trans = filter_trans s sym t ST.empty in
+      delta_get_3rd trans
+
+  let fold_delta (s: SS.t) (sym: symbol) (t: ST.t) (ns: SS.t) : SS.t =
+    if s.is_empty then ns
+    else let st = SS.choose s in
+         let ds = delta st sym t in
+         fold_delta (SS.remove st s) sym t (SS.union ds ns)
+
+  let rec eclose_finals (s: SS.t) (t: ST.t) (ns: SS.t) : SS.t =
+    if s.is_empty then ns
+    else let q = SS.choose s in
+         let qs = eclose q t in
+         eclose_finals (SS.remove q s) t (SS.union qs ns)
+
+  let rec delta_ext (s: state) (w: word) (a: automaton) : SS.t =
+    match w with
+    | Nil 
+    | Cons eps Nil -> eclose s a (* TODO: a.transtitions *)
+    | Cons x xs ->  let rs = delta_ext s xs a in
+                    let qs = fold_delta rs x a.transitions in
+                    eclose_finals qs a SS.empty (* TODO: a.transitions*)
+
+
 end
