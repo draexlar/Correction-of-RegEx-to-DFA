@@ -1,9 +1,9 @@
 module BasicTypes
-  
+
   use seq.Seq, list.List
-  
+
   type char
-    
+
   val constant eps : char (* used for representing the empty transitions *)
 
   type string = seq char
@@ -40,7 +40,7 @@ module RegEx
       Empty
     | Eps
     | Symb symbol
-    (*| Seq regex regex 
+    (*| Seq regex regex
     | Plus regex regex*)
 
   function regexLang (r: regex) : SL.t =
@@ -52,7 +52,7 @@ module RegEx
                       SL.iter (fun w -> SL.add w l) Language.add (regexLang f)
     | Plus (e, f) -> Language.union (regexLang f) (regexLang e) <<r*)
    end
-   
+
 end
 
 
@@ -68,8 +68,8 @@ module NFA
     transitions: ST.t;
     finalStates: SS.t;
   }
-  
-  
+
+
   (* --- Compile automaton --- *)
   let c : ref int = ref 0
 
@@ -91,27 +91,27 @@ module NFA
                       let states = SS.add final states in
                         { states = states; alphabet = SA.add a SA.empty ; start = start; transitions = ST.add (start, a, final) ST.empty; finalStates = SS.add final SS.empty }
   end
-  
-  
+
+
   (* --- Operations over finite automatons --- *)
-  
-  let rec fold_st_to_ss_1st (t: ST.t) (s: SS.t) : SS.t 
+
+  let rec fold_st_to_ss_1st (t: ST.t) (s: SS.t) : SS.t
     variant { ST.cardinal t }
   =
     if ST.is_empty t then s
     else let elem = ST.choose t in
          let (a,_,_) = elem in
          fold_st_to_ss_1st (ST.remove elem t) (SS.add a s)
-         
-  let rec fold_st_to_sa (t: ST.t) (s: SA.t) : SA.t 
+
+  let rec fold_st_to_sa (t: ST.t) (s: SA.t) : SA.t
     variant { ST.cardinal t }
   =
     if ST.is_empty t then s
     else let elem = ST.choose t in
          let (_,b,_) = elem in
          fold_st_to_sa (ST.remove elem t) (SA.add b s)
-         
-  let rec fold_st_to_ss_3rd (t: ST.t) (s: SS.t) : SS.t 
+
+  let rec fold_st_to_ss_3rd (t: ST.t) (s: SS.t) : SS.t
     variant { ST.cardinal t }
   =
     if ST.is_empty t then s
@@ -120,34 +120,34 @@ module NFA
          fold_st_to_ss_3rd (ST.remove elem t) (SS.add c s)
 
   (* get starting state, symbol, and/or end state of all transitions in set  *)
-  let delta_get_1st (t: ST.t) : SS.t = 
+  let delta_get_1st (t: ST.t) : SS.t =
     fold_st_to_ss_1st t SS.empty
 
   let delta_get_2nd (t: ST.t) : SA.t =
     fold_st_to_sa t SA.empty
 
-  let delta_get_3rd (t: ST.t) : SS.t =  
+  let delta_get_3rd (t: ST.t) : SS.t =
     fold_st_to_ss_3rd t SS.empty
-  
-  
+
+
   let rec filter_trans_eps (s: state) (t: ST.t) (nt: ST.t) : ST.t =
     if ST.is_empty t then nt
     else let elem = ST.choose t in
          let (a,b,_) = elem in
          if s = a && b = eps then filter_trans_eps s (ST.remove elem t) (ST.add elem nt)
          else filter_trans_eps s (ST.remove elem t) nt
-  
+
   (* returns the set of state s and all its states reachable by an epsilon transition, given s and an automaton *)
   let next_eps s t =
     let trans = ST.filter (fun (a,b,c) -> s = a && b = eps) t in
-      let nextStates = delta_get_3rd trans in	
+      let nextStates = delta_get_3rd trans in
         States.add s nextStates
 
-  let rec close_empty sts t = 
+  let rec close_empty sts t =
     let ns = States.fold (fun st -> States.union (next_eps st t) ) sts States.empty in
-      if (States.subset ns sts) then ns else close_empty (States.union sts ns) t 
+      if (States.subset ns sts) then ns else close_empty (States.union sts ns) t
 
   let eclose (s: state) (a: automaton) =
     close_empty (States.singleton s) a.transitions
-  
+
 end
