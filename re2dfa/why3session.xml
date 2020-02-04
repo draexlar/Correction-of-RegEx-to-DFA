@@ -1,78 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
-<why3session shape_version="5">
+<why3session shape_version="8">
 <prover id="0" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
-<file>
-<path name=".."/>
-<path name="re2dfa.mlw"/>
+<prover id="1" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Z3" version="4.8.6" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="3" name="CVC4" version="1.7" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="4" name="CVC4" version="1.7" alternative="counterexamples" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="whyml">
+<path name=".."/><path name="re2dfa.mlw"/>
 <theory name="NFA">
- <goal name="VC fold_st_to_ss_1st" expl="VC for fold_st_to_ss_1st" proved="true">
+ <goal name="fold_st_to_ss_1st&#39;vc" expl="VC for fold_st_to_ss_1st" proved="true">
  <transf name="split_vc" proved="true" >
-  <goal name="VC fold_st_to_ss_1st.0" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.05"/></proof>
+  <goal name="fold_st_to_ss_1st&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+  <proof prover="4"><result status="valid" time="0.05"/></proof>
   </goal>
-  <goal name="VC fold_st_to_ss_1st.1" expl="variant decrease" proved="true">
+  <goal name="fold_st_to_ss_1st&#39;vc.1" expl="variant decrease" proved="true">
   <transf name="split_vc" proved="true" >
-   <goal name="VC fold_st_to_ss_1st.1.0" expl="variant decrease" proved="true">
-   <proof prover="0"><result status="valid" time="0.16"/></proof>
+   <goal name="fold_st_to_ss_1st&#39;vc.1.0" expl="variant decrease" proved="true">
+   <proof prover="1"><result status="valid" time="0.02" steps="20"/></proof>
+   <proof prover="4"><result status="valid" time="0.16"/></proof>
    </goal>
-   <goal name="VC fold_st_to_ss_1st.1.1" expl="variant decrease" proved="true">
-   <proof prover="0"><result status="valid" time="0.14"/></proof>
+   <goal name="fold_st_to_ss_1st&#39;vc.1.1" expl="variant decrease" proved="true">
+   <proof prover="1"><result status="valid" time="0.01" steps="16"/></proof>
+   <proof prover="4"><result status="valid" time="0.14"/></proof>
    </goal>
   </transf>
   </goal>
  </transf>
  </goal>
- <goal name="VC fold_st_to_sa" expl="VC for fold_st_to_sa" proved="true">
+ <goal name="fold_st_to_sa&#39;vc" expl="VC for fold_st_to_sa" proved="true">
  <transf name="split_vc" proved="true" >
-  <goal name="VC fold_st_to_sa.0" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.07"/></proof>
+  <goal name="fold_st_to_sa&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+  <proof prover="4"><result status="valid" time="0.07"/></proof>
   </goal>
-  <goal name="VC fold_st_to_sa.1" expl="variant decrease" proved="true">
+  <goal name="fold_st_to_sa&#39;vc.1" expl="variant decrease" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
   <transf name="split_vc" proved="true" >
-   <goal name="VC fold_st_to_sa.1.0" expl="variant decrease" proved="true">
-   <proof prover="0"><result status="valid" time="0.20"/></proof>
+   <goal name="fold_st_to_sa&#39;vc.1.0" expl="variant decrease" proved="true">
+   <proof prover="1"><result status="valid" time="0.02" steps="20"/></proof>
+   <proof prover="4"><result status="valid" time="0.20"/></proof>
    </goal>
-   <goal name="VC fold_st_to_sa.1.1" expl="variant decrease" proved="true">
-   <proof prover="0"><result status="valid" time="0.17"/></proof>
+   <goal name="fold_st_to_sa&#39;vc.1.1" expl="variant decrease" proved="true">
+   <proof prover="1"><result status="valid" time="0.01" steps="16"/></proof>
+   <proof prover="4"><result status="valid" time="0.17"/></proof>
    </goal>
   </transf>
   </goal>
  </transf>
  </goal>
- <goal name="VC fold_st_to_ss_3rd" expl="VC for fold_st_to_ss_3rd" proved="true">
+ <goal name="fold_st_to_ss_3rd&#39;vc" expl="VC for fold_st_to_ss_3rd" proved="true">
  <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
  <transf name="split_vc" proved="true" >
-  <goal name="VC fold_st_to_ss_3rd.0" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.08"/></proof>
+  <goal name="fold_st_to_ss_3rd&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+  <proof prover="4"><result status="valid" time="0.08"/></proof>
   </goal>
-  <goal name="VC fold_st_to_ss_3rd.1" expl="variant decrease" proved="true">
-  <proof prover="0"><result status="valid" time="0.19"/></proof>
-  </goal>
- </transf>
- </goal>
- <goal name="VC filter_trans" expl="VC for filter_trans">
- </goal>
- <goal name="VC fold_next_states" expl="VC for fold_next_states">
- </goal>
- <goal name="VC close_empty" expl="VC for close_empty">
- <proof prover="0" obsolete="true"><result status="failure" time="0.00"/></proof>
- </goal>
- <goal name="VC eclose" expl="VC for eclose">
- <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
- <transf name="split_vc" >
-  <goal name="VC eclose.0" expl="termination">
-  <proof prover="0" obsolete="true"><result status="failure" time="0.00"/></proof>
+  <goal name="fold_st_to_ss_3rd&#39;vc.1" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="20"/></proof>
+  <proof prover="4"><result status="valid" time="0.19"/></proof>
   </goal>
  </transf>
  </goal>
- <goal name="VC next_eps" expl="VC for next_eps">
- <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <goal name="filter_trans&#39;vc" expl="VC for filter_trans" proved="true">
+ <proof prover="1"><result status="valid" time="0.01" steps="37"/></proof>
+ </goal>
+ <goal name="fold_next_states&#39;vc" expl="VC for fold_next_states" proved="true">
+ <proof prover="1"><result status="valid" time="0.01" steps="23"/></proof>
+ </goal>
+ <goal name="compile&#39;vc" expl="VC for compile">
  <transf name="split_vc" >
-  <goal name="VC next_eps.0" expl="termination">
-  <proof prover="0"><result status="failure" time="0.00"/></proof>
+  <goal name="compile&#39;vc.0" expl="postcondition" proved="true">
+  <proof prover="1" timelimit="5"><result status="valid" time="1.30" steps="2924"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.1" expl="postcondition" proved="true">
+  <transf name="subst_all" proved="true" >
+   <goal name="compile&#39;vc.1.0" expl="postcondition" proved="true">
+   <transf name="unfold" proved="true" arg1="regexLang">
+    <goal name="compile&#39;vc.1.0.0" expl="postcondition" proved="true">
+    <transf name="compile_match" proved="true" >
+     <goal name="compile&#39;vc.1.0.0.0" expl="postcondition" proved="true">
+     <proof prover="2"><result status="valid" time="1.00"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="compile&#39;vc.2" expl="postcondition">
+  <proof prover="1" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  <proof prover="2" obsolete="true"><result status="failure" time="0.00"/></proof>
+  <proof prover="3" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  <transf name="subst_all" >
+   <goal name="compile&#39;vc.2.0" expl="postcondition">
+   <transf name="unfold" arg1="regexLang">
+    <goal name="compile&#39;vc.2.0.0" expl="postcondition">
+    <transf name="compile_match" >
+     <goal name="compile&#39;vc.2.0.0.0" expl="postcondition">
+     <proof prover="1" timelimit="5"><result status="timeout" time="5.00"/></proof>
+     <proof prover="2"><result status="timeout" time="5.00"/></proof>
+     <proof prover="3"><result status="timeout" time="5.00"/></proof>
+     <transf name="unfold" arg1="automatonLang">
+      <goal name="compile&#39;vc.2.0.0.0.0" expl="postcondition">
+      <transf name="unfold" arg1="sigma_ext">
+       <goal name="compile&#39;vc.2.0.0.0.0.0" expl="postcondition">
+       <transf name="replace" arg1="(alphabet (automaton&#39;mk states o start o2 o4))" arg2="(add x (to_fset3 o1))">
+        <goal name="compile&#39;vc.2.0.0.0.0.0.0" expl="postcondition">
+        <proof prover="1" timelimit="5"><result status="timeout" time="5.00"/></proof>
+        <proof prover="2"><result status="timeout" time="5.00"/></proof>
+        <proof prover="3"><result status="timeout" time="5.00"/></proof>
+        <transf name="replace" arg1="o1" arg2="empty">
+         <goal name="compile&#39;vc.2.0.0.0.0.0.0.0" expl="postcondition">
+         <proof prover="1"><result status="timeout" time="1.00"/></proof>
+         <proof prover="2" timelimit="1"><result status="timeout" time="1.00"/></proof>
+         <proof prover="3" timelimit="1"><result status="timeout" time="1.00"/></proof>
+         </goal>
+         <goal name="compile&#39;vc.2.0.0.0.0.0.0.1" expl="equality hypothesis" proved="true">
+         <proof prover="1"><result status="valid" time="0.01" steps="29"/></proof>
+         </goal>
+        </transf>
+        </goal>
+        <goal name="compile&#39;vc.2.0.0.0.0.0.1" expl="equality hypothesis" proved="true">
+        <proof prover="1"><result status="valid" time="0.01" steps="29"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
  </transf>
  </goal>
