@@ -258,17 +258,18 @@ module NFA
   let c: gen_sym = { r = 0; dom = empty }
 
   val next_val (g: gen_sym) : int
+    writes  { g }
     ensures { not (mem result (old g).dom) }
     ensures { g.r = (old g).r + 1 }
     ensures { g.dom == add result (old g).dom }
   (* = g.r <- g.r + 1; g.dom <- add g.r g.dom; g.r *)
 
   (* TODO: delete later *)
-  (* axiom delta_ext_eps: forall i a. *)
-  (*   delta_ext i (Cons eps Nil) a = add a.start a.finalStates *)
+  axiom delta_ext_eps: forall i a.
+    delta_ext i (Cons eps Nil) a = add a.start a.finalStates
 
-  axiom delta_ext_symb: forall i a l.
-    delta_ext i l a = add a.start a.finalStates
+  (* axiom delta_ext_symb: forall i a l. *)
+  (*   delta_ext i l a = add a.start a.finalStates *)
 
   function sigma_ext (ss: fset symbol) : fset word =
     let ss = map (fun s -> Cons s Nil) ss in
