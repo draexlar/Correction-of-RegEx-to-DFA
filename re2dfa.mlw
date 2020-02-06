@@ -3,33 +3,31 @@ module BasicTypes
   use seq.Seq, list.List
 
   type char
-  
+
   val eq (c1 c2: char) : bool
     ensures { result <-> c1 = c2 }
-    
+
   val constant eps : char (* used for representing the empty transitions *)
 
-  type string = seq char
-
-  (* defining input symbols and alphabet *)
+   (* defining input symbols and alphabet *)
   type symbol = char
 
-  clone import appset.Appset as SA with type elt = symbol
+  clone import set.SetApp as SA with type elt = symbol
 
   (* defining word and language as a set *)
   type word = list symbol
 
-  clone import appset.Appset as SL with type elt = word
+  clone import set.SetApp as SL with type elt = word
 
   (* defining a state and a set of states *)
   type state = int
 
-  clone import appset.Appset as SS with type elt = state
+  clone import set.SetApp as SS with type elt = state
 
   (* defining a transition and a set of transitions *)
   type transition = (state , symbol , state)
 
-  clone import appset.Appset as ST with type elt = transition
+  clone import set.SetApp as ST with type elt = transition
 
 end
 
@@ -46,11 +44,13 @@ module RegEx
     (*| Seq regex regex
     | Plus regex regex*)
 
-  function regexLang (r: regex) : SL.t =
+  use set.Fset
+
+  function regexLang (r: regex) : fset word =
     match r with
-    | Empty -> SL.empty
-    | Eps -> SL.add (Cons eps Nil) SL.empty
-    | Symb a -> SL.add (Cons a Nil) SL.empty
+    | Empty -> empty
+    | Eps -> add (Cons eps Nil) empty
+    | Symb a -> add (Cons a Nil) empty
     (*| Seq e f -> let l = regexLang e in
                       SL.iter (fun w -> SL.add w l) Language.add (regexLang f)
     | Plus (e, f) -> Language.union (regexLang f) (regexLang e) <<r*)
@@ -63,129 +63,239 @@ module NFA
 
   use BasicTypes, RegEx, ref.Ref
   use int.Int
+  use set.Fset
+  use list.List, list.Length
+
+  val constant start_const: state
 
   type automaton = {
-    states: SS.t;
-    alphabet: SA.t;
+    states: SS.set;
+    alphabet: SA.set;
     start: state;
-    transitions: ST.t;
-    finalStates: SS.t;
-  }
+    transitions: ST.set;
+    finalStates: SS.set;
+  } invariant { mem start states }
+    invariant { not (is_empty states) }
+    invariant { subset finalStates states }
+    invariant { forall t: transition. mem t transitions -> 
+                  let (a,b,c) = t in mem a states /\ mem b (add eps alphabet) /\ mem c states }
+    by { states = SS.singleton start_const; alphabet = SA.empty (); 
+         start = start_const; transitions = ST.empty (); finalStates = SS.empty () }
 
+  (* --- Operations over finite automatons --- *)
 
+  let rec ghost function fold_st_to_ss_1st (t: fset transition) (s: fset state) : fset state
+    variant { cardinal t }
+  =
+    if is_empty t then s
+    else let elem = pick t in
+         let (a,_,_) = elem in
+         fold_st_to_ss_1st (remove elem t) (add a s)
+
+  let rec ghost function fold_st_to_sa (t: fset transition) (s: fset symbol) : fset symbol
+    variant { cardinal t }
+  =
+    if is_empty t then s
+    else let elem = pick t in
+         let (_,b,_) = elem in
+         fold_st_to_sa (remove elem t) (add b s)
+
+  let rec ghost function fold_st_to_ss_3rd (t: fset transition) : fset state
+    variant { cardinal t }
+    ensures { forall x. mem x result -> exists a b. mem (a, b, x) t }
+  =
+    if is_empty t then empty
+    else let elem = pick t in
+         let (_,_,c) = elem in
+         add c (fold_st_to_ss_3rd (remove elem t))
+
+  (* get starting state, symbol, and/or end state of all transitions in set  *)
+  function delta_get_1st (t: fset transition) : fset state =
+    fold_st_to_ss_1st t empty
+
+  function delta_get_2nd (t: fset transition) : fset symbol =
+    fold_st_to_sa t empty
+
+  let ghost function delta_get_3rd (t: fset transition) : fset state
+    ensures { forall x. mem x result -> exists a b. mem (a, b, x) t }
+  =
+    fold_st_to_ss_3rd t
+
+  let rec ghost function filter_trans (s: state) (sym: symbol) (t: fset transition) (nt: fset transition) :
+    fset transition
+    (* requires { mem s a.states } *)
+    (* provar subconjunto do que entrou *)
+    variant { cardinal t }
+    ensures { subset result (union t nt) }
+  = 
+    if is_empty t then nt
+    else let elem = pick t in
+      let (a,b,_) = elem in
+      if s = a && eq b sym then
+        filter_trans s sym (remove elem t) (add elem nt)
+      else filter_trans s sym (remove elem t) nt
+
+  (* returns the set of state s and all its states reachable by an epsilon transition, given s and an automaton *)
+  let ghost function next_eps (s: state) (a: automaton) : fset state 
+    requires { mem s a.states }
+    ensures { subset result a.states }
+  = 
+    let t = BasicTypes.ST.to_fset a.transitions in 
+    let trans = filter_trans s eps t empty in
+    let nextStates = delta_get_3rd trans in
+    add s nextStates
+
+  (* obtains the next states computed through epsilon transitions from each state in s *)
+  let rec ghost function fold_next_states (s: fset state) (a: automaton) (ns: fset state) : fset state
+    requires { subset s a.states }
+    requires { subset ns a.states }
+    variant { cardinal s }
+    ensures { subset result a.states }
+  =
+    if is_empty s then ns
+    else let st = pick s in
+         let nxt_sts = (next_eps st a) in
+         fold_next_states (remove st s) a (union nxt_sts ns)
+  
+  use int.Power
+  
+  (* computes the eclose for each state in sts *)
+  let rec ghost function close_empty (sts: fset state) (a: automaton) : fset state
+    requires { subset sts a.states }
+    variant { cardinal a.states - cardinal sts }
+    ensures { subset result a.states }
+  = 
+    let ns = fold_next_states sts a empty in
+    if subset ns sts then ns else close_empty (union sts ns) a
+
+  (* obtains the eclose of s *)
+  let ghost function eclose (s: state) (a: automaton) : fset state
+    requires { mem s a.states }
+    ensures { subset result a.states }
+  = close_empty (add s empty) a
+  
+  (* returns states reachable from s through sym *)
+  let ghost function delta (s: state) (sym: symbol) (a: automaton) : fset state 
+    requires { mem s a.states }
+    ensures { subset result a.states }
+  =
+    let t = BasicTypes.ST.to_fset a.transitions in 
+    let trans = filter_trans s sym t empty in
+      delta_get_3rd trans
+
+  (* for each state in s, computes its transition through sym *)
+  let rec ghost function fold_delta (s: fset state) (sym: symbol) (a: automaton) (ns: fset state) : fset state 
+    requires { subset s a.states }
+    requires { subset ns a.states }
+    variant { cardinal s }
+    ensures { subset result a.states }
+  =
+    if is_empty s then ns
+    else let st = pick s in
+         let ds = delta st sym a in
+         fold_delta (remove st s) sym a (union ds ns)
+
+  (* computes eclose for each state in s *)
+  let rec ghost function eclose_finals (s: fset state) (a: automaton) (ns: fset state) : fset state
+    requires { subset s a.states }
+    requires { subset ns a.states }
+    variant { cardinal s }
+    ensures { subset result a.states } 
+  =
+    if is_empty s then ns
+    else let q = pick s in
+         let qs = eclose q a in
+         eclose_finals (remove q s) a (union qs ns)
+
+  (* extended transition function *)
+  (*let rec ghost function delta_ext (s: state) (w: word) (a: automaton) : fset state
+    requires { mem s a.states }
+    variant { length w }
+    ensures { subset result a.states }
+  =
+    match w with
+    | Nil -> eclose s a
+    | Cons x Nil -> if eq x eps then eclose s a
+                    else compute_delta_ext s x Nil a 
+    | Cons x xs ->  compute_delta_ext s x xs a
+    end
+  with ghost compute_delta_ext (s: state) (sym: symbol) (w: word) (a: automaton) : fset state
+    requires { mem s a.states }
+    (* variant { length w } *)
+    ensures { subset result a.states }
+  =
+    let trans = BasicTypes.ST.to_fset a.transitions in
+    let rs = delta_ext s w a in
+    let qs = fold_delta rs sym a Fset.empty in
+      eclose_finals qs a Fset.empty *)
+  
+  let rec ghost function delta_ext (s: state) (w: word) (a: automaton) : fset state
+    requires { mem s a.states }
+    variant { length w }
+    ensures { subset result a.states }
+  =
+    let trans = BasicTypes.ST.to_fset a.transitions in
+      match w with
+      | Nil -> eclose s a
+      | Cons x Nil -> if eq x eps then eclose s a
+                      else let rs = delta_ext s Nil a in
+                           let qs = fold_delta rs x a empty in
+                             eclose_finals qs a empty
+      | Cons x xs ->  let rs = delta_ext s xs a in
+                      let qs = fold_delta rs x a empty in
+                        eclose_finals qs a empty
+      end
+
+  
   (* --- Compile automaton --- *)
+  
   let c : ref int = ref 0
 
   let next_val p =
     p := (!p) + 1; !p
 
-  let compile (r: regex) : automaton =
-    match r with
+  (* TODO: delete later *)
+  axiom delta_ext_eps: forall i a.
+    delta_ext i (Cons eps Nil) a = add a.start a.finalStates
+
+  axiom delta_ext_symb: forall i a x.
+    delta_ext i (Cons x Nil) a = add a.start a.finalStates
+
+  function sigma_ext (ss: fset symbol) : fset word =
+    let ss = map (fun s -> Cons s Nil) ss in
+    add (Cons eps Nil) ss
+
+  function automatonLang (a: automaton) : fset word =
+    let p = fun w -> inter (delta_ext a.start w a) a.finalStates <> empty in
+    filter (sigma_ext a.alphabet) p
+
+  let compile (r: regex) : automaton
+    ensures { regexLang r = automatonLang result }
+  = match r with
     | Empty -> let i = next_val c in
-                { states = SS.add i SS.empty; alphabet = SA.empty; start = i; transitions = ST.empty; finalStates = SS.empty }
+        { states = SS.add i (SS.empty ());
+          alphabet = SA.empty ();
+          start = i;
+          transitions = ST.empty ();
+          finalStates = SS.empty (); }
     | Eps -> let start = next_val c in
-              let final = next_val c in
-                let states = SS.add start SS.empty in
-                  let states = SS.add final states in
-                    { states = states; alphabet = SA.empty; start = start; transitions = ST.add (start, eps, final) ST.empty; finalStates = SS.add final SS.empty }
+        let final = next_val c in
+        let states = SS.add start (SS.empty ()) in
+        let states = SS.add final states in
+        { states = states;
+          alphabet = SA.empty ();
+          start = start;
+          transitions = ST.add (start, eps, final) (ST.empty ());
+          finalStates = SS.add final (SS.empty ()) }
     | Symb a -> let start = next_val c in
-                  let final = next_val c in
-                    let states = SS.add start SS.empty in
-                      let states = SS.add final states in
-                        { states = states; alphabet = SA.add a SA.empty ; start = start; transitions = ST.add (start, a, final) ST.empty; finalStates = SS.add final SS.empty }
+        let final = next_val c in
+        let states = SS.add start (SS.empty ()) in
+        let states = SS.add final states in
+        { states = states;
+          alphabet = SA.add a (SA.empty ()) ;
+          start = start;
+          transitions = ST.add (start, a, final) (ST.empty ());
+          finalStates = SS.add final (SS.empty ()) }
   end
-
-
-  (* --- Operations over finite automatons --- *)
-
-  let rec fold_st_to_ss_1st (t: ST.t) (s: SS.t) : SS.t
-    variant { ST.cardinal t }
-  =
-    if ST.is_empty t then s
-    else let elem = ST.choose t in
-         let (a,_,_) = elem in
-         fold_st_to_ss_1st (ST.remove elem t) (SS.add a s)
-
-  let rec fold_st_to_sa (t: ST.t) (s: SA.t) : SA.t
-    variant { ST.cardinal t }
-  =
-    if ST.is_empty t then s
-    else let elem = ST.choose t in
-         let (_,b,_) = elem in
-         fold_st_to_sa (ST.remove elem t) (SA.add b s)
-
-  let rec fold_st_to_ss_3rd (t: ST.t) (s: SS.t) : SS.t
-    variant { ST.cardinal t }
-  =
-    if ST.is_empty t then s
-    else let elem = ST.choose t in
-         let (_,_,c) = elem in
-         fold_st_to_ss_3rd (ST.remove elem t) (SS.add c s)
-
-  (* get starting state, symbol, and/or end state of all transitions in set  *)
-  let delta_get_1st (t: ST.t) : SS.t =
-    fold_st_to_ss_1st t SS.empty
-
-  let delta_get_2nd (t: ST.t) : SA.t =
-    fold_st_to_sa t SA.empty
-
-  let delta_get_3rd (t: ST.t) : SS.t =
-    fold_st_to_ss_3rd t SS.empty
-  
-  
-  let rec filter_trans (s: state) (sym: symbol) (t: ST.t) (nt: ST.t) : ST.t 
-    variant { ST.cardinal t } 
-  =
-    if ST.is_empty t then nt
-    else let elem = ST.choose t in
-         let (a,b,_) = elem in
-         if s = a && eq b sym then filter_trans s sym (ST.remove elem t) (ST.add elem nt)
-         else filter_trans s sym (ST.remove elem t) nt
-  
-  (* returns the set of state s and all its states reachable by an epsilon transition, given s and an automaton *)
-  let next_eps s t =
-    let trans = filter_trans s eps t ST.empty in
-      let nextStates = delta_get_3rd trans in	
-        SS.add s nextStates
-
-  let rec fold_next_states (s: SS.t) (t: ST.t) (ns: SS.t) : SS.t
-    variant { SS.cardinal s }
-  =
-    if SS.is_empty s then ns
-    else let st = SS.choose s in
-         let nxt_sts = (next_eps st t) in
-         fold_next_states (SS.remove st s) t (SS.union nxt_sts ns)
-  
-  let rec close_empty sts t = 
-    let ns = fold_next_states sts t SS.empty in
-      if (SS.subset ns sts) then ns else close_empty (SS.union sts ns) t 
-
-  let eclose (s: state) (a: automaton) =
-    close_empty (SS.add s SS.empty) a.transitions
-  
-  let delta (s: state) (sym: symbol) (t: ST.t) : state =
-    let trans = filter_trans s sym t ST.empty in
-      delta_get_3rd trans
-
-  let fold_delta (s: SS.t) (sym: symbol) (t: ST.t) (ns: SS.t) : SS.t =
-    if s.is_empty then ns
-    else let st = SS.choose s in
-         let ds = delta st sym t in
-         fold_delta (SS.remove st s) sym t (SS.union ds ns)
-
-  let rec eclose_finals (s: SS.t) (t: ST.t) (ns: SS.t) : SS.t =
-    if s.is_empty then ns
-    else let q = SS.choose s in
-         let qs = eclose q t in
-         eclose_finals (SS.remove q s) t (SS.union qs ns)
-
-  let rec delta_ext (s: state) (w: word) (a: automaton) : SS.t =
-    match w with
-    | Nil 
-    | Cons eps Nil -> eclose s a (* TODO: a.transtitions *)
-    | Cons x xs ->  let rs = delta_ext s xs a in
-                    let qs = fold_delta rs x a.transitions in
-                    eclose_finals qs a SS.empty (* TODO: a.transitions*)
-
 
 end

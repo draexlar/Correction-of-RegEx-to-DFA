@@ -183,4 +183,8 @@ let print_automaton a =
   print_string "Final states: "; print_states a.finalStates;
   print_string "\n"
 
-let ex = List.fold_right Transitions.add [ ("1", epsilon, "2"); ("1", epsilon, "4"); ("2", epsilon, "3"); ("3", epsilon, "6"); ("4", 'a', "5"); ("5", epsilon, "7"); ("5", 'b', "6"); ("3", epsilon, "2") ] Transitions.empty
+let ex0 = List.fold_right Transitions.add [ ("1", epsilon, "2"); ("1", epsilon, "4"); ("2", epsilon, "3"); ("3", epsilon, "6"); ("4", 'a', "5"); ("5", epsilon, "7"); ("5", 'b', "6"); ("3", epsilon, "2") ] Transitions.empty
+
+let ex1 = List.fold_right Transitions.add [ ("1", epsilon, "3"); ("2", epsilon, "4"); ("2", epsilon, "5"); ("3", epsilon, "6"); ("3", epsilon, "7"); ("6", epsilon, "2"); ("7", epsilon, "1") ] Transitions.empty
+
+let () = print_states (eclose "1" ex1); print_newline ()
