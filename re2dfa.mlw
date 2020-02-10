@@ -308,6 +308,7 @@ module NFA
           transitions = ST.add (start, a, final) (ST.empty ());
           finalStates = SS.add final (SS.empty ()) } in
         assert { exists q. mem (r.start, a, q) r.transitions };
+        assert { delta_ext r.start (Cons a Nil) r = r.finalStates };
         r
   end
 
