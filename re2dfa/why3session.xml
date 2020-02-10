@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Z3" version="4.8.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="re2dfa.mlw"/>
+<theory name="NFA">
+ <goal name="automaton&#39;vc" expl="VC for automaton">
+ <proof prover="0"><result status="valid" time="0.36"/></proof>
+ </goal>
+ <goal name="delta_get_1st&#39;vc" expl="VC for delta_get_1st">
+ <transf name="split_vc" >
+  <goal name="delta_get_1st&#39;vc.0" expl="variant decrease">
+  <transf name="split_vc" >
+   <goal name="delta_get_1st&#39;vc.0.0" expl="variant decrease">
+   <proof prover="0"><result status="valid" time="0.16"/></proof>
+   </goal>
+   <goal name="delta_get_1st&#39;vc.0.1" expl="variant decrease">
+   <proof prover="0"><result status="valid" time="0.14"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="delta_get_1st&#39;vc.1" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00"/></proof>
+  <proof prover="1"><result status="valid" time="0.73" steps="1113967"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="delta_get_2nd&#39;vc" expl="VC for delta_get_2nd">
+ <transf name="split_vc" >
+  <goal name="delta_get_2nd&#39;vc.0" expl="variant decrease">
+  <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+  <transf name="split_vc" >
+   <goal name="delta_get_2nd&#39;vc.0.0" expl="variant decrease">
+   <proof prover="0"><result status="valid" time="0.20"/></proof>
+   </goal>
+   <goal name="delta_get_2nd&#39;vc.0.1" expl="variant decrease">
+   <proof prover="0"><result status="valid" time="0.17"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="delta_get_2nd&#39;vc.1" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00"/></proof>
+  <proof prover="1"><result status="valid" time="0.73" steps="1241298"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="delta_get_3rd&#39;vc" expl="VC for delta_get_3rd">
+ <proof prover="0"><result status="valid" time="0.65"/></proof>
+ </goal>
+ <goal name="filter_trans&#39;vc" expl="VC for filter_trans">
+ <proof prover="0"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="valid" time="0.22" steps="696"/></proof>
+ </goal>
+ <goal name="next_eps&#39;vc" expl="VC for next_eps">
+ <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <transf name="split_vc" >
+  <goal name="next_eps&#39;vc.0" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="valid" time="0.23" steps="730"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="fold_next_states&#39;vc" expl="VC for fold_next_states">
+ <proof prover="0"><result status="valid" time="0.31"/></proof>
+ </goal>
+ <goal name="close_empty&#39;vc" expl="VC for close_empty">
+ <proof prover="0"><result status="valid" time="0.33"/></proof>
+ </goal>
+ <goal name="eclose&#39;vc" expl="VC for eclose">
+ <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <transf name="split_vc" >
+  <goal name="eclose&#39;vc.0" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.21"/></proof>
+  </goal>
+  <goal name="eclose&#39;vc.1" expl="postcondition">
+  <proof prover="0"><result status="valid" time="0.10"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="delta&#39;vc" expl="VC for delta">
+ <proof prover="0"><result status="valid" time="0.78"/></proof>
+ <proof prover="2" obsolete="true"><result status="valid" time="0.88" steps="2104"/></proof>
+ </goal>
+ <goal name="fold_delta&#39;vc" expl="VC for fold_delta">
+ <proof prover="0"><result status="valid" time="0.34"/></proof>
+ </goal>
+ <goal name="eclose_finals&#39;vc" expl="VC for eclose_finals">
+ <proof prover="0"><result status="valid" time="0.33"/></proof>
+ </goal>
+ <goal name="delta_ext&#39;vc" expl="VC for delta_ext">
+ <proof prover="0"><result status="valid" time="0.31"/></proof>
+ </goal>
+ <goal name="compile&#39;vc" expl="VC for compile">
+ <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <proof prover="1" obsolete="true"><result status="timeout" time="1.00" steps="1509788"/></proof>
+ <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <transf name="split_vc" >
+  <goal name="compile&#39;vc.0" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.20"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.1" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.19"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.2" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.25"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.3" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.36"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.4" expl="postcondition">
+  <transf name="unfold" arg1="regexLang">
+   <goal name="compile&#39;vc.4.0" expl="postcondition">
+   <transf name="subst_all" >
+    <goal name="compile&#39;vc.4.0.0" expl="postcondition">
+    <transf name="compile_match" >
+     <goal name="compile&#39;vc.4.0.0.0" expl="postcondition">
+     <proof prover="0"><result status="timeout" time="1.00"/></proof>
+     <proof prover="2"><result status="valid" time="1.97" steps="4446"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="compile&#39;vc.5" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.32"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.6" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.20"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.7" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.39"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.8" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.36"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.9" expl="assertion">
+  <proof prover="0"><result status="valid" time="0.28"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.10" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="unknown" time="0.67"/></proof>
+  <proof prover="1" obsolete="true"><result status="highfailure" time="0.73" steps="1206479"/></proof>
+  <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
+  <transf name="instantiate" arg1="delta_ext&#39;def" arg2="(start1 r)">
+   <goal name="compile&#39;vc.10.0" expl="assertion">
+   <transf name="instantiate" arg1="Hinst" arg2="(Cons eps (Nil: list char)), r">
+    <goal name="compile&#39;vc.10.0.0" expl="assertion">
+    <transf name="destruct" arg1="Hinst">
+     <goal name="compile&#39;vc.10.0.0.0" expl="destruct premise">
+     <proof prover="0"><result status="valid" time="0.18"/></proof>
+     </goal>
+     <goal name="compile&#39;vc.10.0.0.1" expl="assertion">
+     <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+     <proof prover="1" timelimit="5" obsolete="true"><result status="highfailure" time="4.03" steps="4820827"/></proof>
+     <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+     <transf name="destruct" arg1="Hinst">
+      <goal name="compile&#39;vc.10.0.0.1.0" expl="destruct premise">
+      <proof prover="0"><result status="valid" time="0.27"/></proof>
+      </goal>
+      <goal name="compile&#39;vc.10.0.0.1.1" expl="assertion">
+      <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+      <proof prover="1" timelimit="5" obsolete="true"><result status="highfailure" time="4.29" steps="5148583"/></proof>
+      <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+      <transf name="compile_match" >
+       <goal name="compile&#39;vc.10.0.0.1.1.0" expl="assertion">
+       <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+       <proof prover="1" timelimit="5" obsolete="true"><result status="timeout" time="5.00" steps="5438035"/></proof>
+       <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+       <transf name="eliminate_let_fmla" >
+        <goal name="compile&#39;vc.10.0.0.1.1.0.0" expl="assertion">
+        <transf name="destruct" arg1="Hinst">
+         <goal name="compile&#39;vc.10.0.0.1.1.0.0.0" expl="assertion">
+         <proof prover="0"><result status="timeout" time="1.00"/></proof>
+         <proof prover="1"><result status="timeout" time="1.00" steps="1740034"/></proof>
+         <proof prover="2"><result status="timeout" time="1.00"/></proof>
+         </goal>
+         <goal name="compile&#39;vc.10.0.0.1.1.0.0.1" expl="assertion">
+         <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+         <proof prover="1" timelimit="5" obsolete="true"><result status="highfailure" time="4.24" steps="5236719"/></proof>
+         <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+         <transf name="replace" arg1="(delta_ext (start1 r) (Cons eps (Nil: list char)) r)" arg2="(eclose (start1 r) r)">
+          <goal name="compile&#39;vc.10.0.0.1.1.0.0.1.0" expl="assertion">
+          <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+          <proof prover="1" timelimit="5" obsolete="true"><result status="highfailure" time="3.93" steps="5036653"/></proof>
+          <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+          <transf name="instantiate" arg1="eclose&#39;def" arg2="(start1 r),r">
+           <goal name="compile&#39;vc.10.0.0.1.1.0.0.1.0.0" expl="assertion">
+           <transf name="destruct" arg1="Hinst">
+            <goal name="compile&#39;vc.10.0.0.1.1.0.0.1.0.0.0" expl="destruct premise">
+            <proof prover="0"><result status="valid" time="0.19"/></proof>
+            </goal>
+            <goal name="compile&#39;vc.10.0.0.1.1.0.0.1.0.0.1" expl="assertion">
+            <proof prover="0"><result status="valid" time="0.13"/></proof>
+            <proof prover="1" timelimit="5" obsolete="true"><result status="highfailure" time="4.39" steps="5585812"/></proof>
+            <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+          <goal name="compile&#39;vc.10.0.0.1.1.0.0.1.1" expl="equality hypothesis">
+          <proof prover="0"><result status="valid" time="0.11"/></proof>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="compile&#39;vc.11" expl="postcondition">
+  <transf name="subst_all" >
+   <goal name="compile&#39;vc.11.0" expl="postcondition">
+   <proof prover="0"><result status="valid" time="1.13"/></proof>
+   <proof prover="1" obsolete="true"><result status="highfailure" time="0.77" steps="1329356"/></proof>
+   <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="compile&#39;vc.12" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.33"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.13" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.20"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.14" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.38"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.15" expl="precondition">
+  <proof prover="0"><result status="valid" time="0.31"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.16" expl="assertion">
+  <proof prover="0"><result status="valid" time="0.27"/></proof>
+  </goal>
+  <goal name="compile&#39;vc.17" expl="postcondition">
+  <transf name="unfold" arg1="regexLang">
+   <goal name="compile&#39;vc.17.0" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="1.00"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00" steps="1761812"/></proof>
+   <proof prover="2"><result status="timeout" time="2.00"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>
