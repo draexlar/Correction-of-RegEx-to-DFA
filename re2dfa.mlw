@@ -279,7 +279,7 @@ module NFA
 
   lemma langLength1:
     forall a: automaton, f: state, sym: symbol.
-      mem f a.finalStates /\ mem sym a.alphabet /\ a.transitions = singleton (a.start, sym, f) ->
+      mem f a.finalStates /\ a.transitions = singleton (a.start, sym, f) ->
       automatonLang a = singleton (Cons sym Nil)
       
   (*lemma langContains:
@@ -306,7 +306,7 @@ module NFA
           transitions = ST.add (start, eps, final) (ST.empty ());
           finalStates = SS.add final (SS.empty ()) } in
         assert { exists q. mem (r.start, eps, q) r.transitions };
-        assert { delta_ext r.start (Cons eps Nil) r = add r.start r.finalStates };
+        (*assert { delta_ext r.start (Cons eps Nil) r = add r.start r.finalStates };*)
         r
     | Symb a -> let start = next_val c in
         let final = next_val c in
