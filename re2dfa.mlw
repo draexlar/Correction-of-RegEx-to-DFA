@@ -277,6 +277,16 @@ module NFA
       | Cons x _ -> exists q. mem (s, x, q) a.transitions
       end*)
 
+  lemma langLength1:
+    forall a: automaton, f: state, sym: symbol.
+      mem f a.finalStates /\ mem sym a.alphabet /\ a.transitions = singleton (a.start, sym, f) ->
+      automatonLang a = singleton (Cons sym Nil)
+      
+  (*lemma langContains:
+    forall a: automaton, f: state, sym: symbol.
+      mem f a.finalStates /\ mem sym a.alphabet /\ subset (singleton (a.start, sym, f)) (a.transitions) ->
+      subset (singleton (Cons sym Nil)) (automatonLang a)*)
+
   let compile (r: regex) : automaton
     ensures { regexLang r = automatonLang result }
   = match r with
@@ -308,7 +318,7 @@ module NFA
           transitions = ST.add (start, a, final) (ST.empty ());
           finalStates = SS.add final (SS.empty ()) } in
         assert { exists q. mem (r.start, a, q) r.transitions };
-        assert { delta_ext r.start (Cons a Nil) r = r.finalStates };
+        (*assert { delta_ext r.start (Cons a Nil) r = r.finalStates };*)
         r
   end
 
