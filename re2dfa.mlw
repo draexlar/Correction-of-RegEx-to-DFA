@@ -89,6 +89,7 @@ module NFA
   let rec ghost function delta_get_1st (t: fset transition) : fset state 
     variant { cardinal t }
     ensures { forall x. mem x result -> exists b c. mem (x, b, c) t }
+    ensures { forall a, b, c. mem (a, b, c) t -> mem a result }
   =
     if is_empty t then empty
     else let elem = pick t in
@@ -99,6 +100,7 @@ module NFA
   let rec ghost function delta_get_2nd (t: fset transition) : fset symbol
     variant { cardinal t }
     ensures { forall x. mem x result -> exists a c. mem (a, x, c) t }
+    ensures { forall a, b, c. mem (a, b, c) t -> mem b result }
   =
     if is_empty t then empty
     else let elem = pick t in
@@ -108,6 +110,7 @@ module NFA
   let rec ghost function delta_get_3rd (t: fset transition) : fset state
     variant { cardinal t }
     ensures { forall x. mem x result -> exists a b. mem (a, b, x) t }
+    ensures { forall a, b, c. mem (a, b, c) t -> mem c result }
   =
     if is_empty t then empty
     else let elem = pick t in
@@ -147,8 +150,8 @@ module NFA
     variant  { cardinal s }
     ensures  { subset result a.states }
     ensures  { subset s result }
-    ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions)  }
-    (*ensures  { forall i, q. mem i result /\ mem (i, eps, q) a.transitions -> mem q result }*)
+    ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions) }
+    ensures  { forall i, q. mem i s /\ mem (i, eps, q) a.transitions -> mem q result }
     (*ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }*)
   =
     if is_empty s then empty
@@ -160,6 +163,10 @@ module NFA
            union nxt_sts (fold_next_states (remove q s) a)
 
   use int.Power
+  
+  (*lemma close:
+    forall i, q, s, a. let result = fold_next_states s a in
+      mem i result /\ mem (i, eps, q) a.transitions -> mem q result*)
 
   (* computes the eclose for each state in sts *)
   let rec ghost function eclose (s: fset state) (a: automaton) : fset state
@@ -167,8 +174,8 @@ module NFA
     variant  { cardinal a.states - cardinal s }
     ensures  { subset result a.states }
     ensures  { subset s result }
-    (*ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i s /\ mem (i, eps, q) a.transitions)  }*)
-    ensures  { forall i, q. mem (i, eps, q) a.transitions /\ mem i result -> mem q result }
+    ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions)  }
+    ensures  { forall i, q. mem i result /\ mem (i, eps, q) a.transitions -> mem q result }
   =
     let ns = fold_next_states s a in
       if subset ns s then ns 
@@ -178,6 +185,7 @@ module NFA
   let ghost function delta (s: state) (sym: symbol) (a: automaton) : fset state
     requires { mem s a.states }
     ensures  { subset result a.states }
+    ensures { forall c. mem (s, sym, c) a.transitions <-> mem c result }
   =
     let t = BasicTypes.ST.to_fset a.transitions in
     let trans = filter_trans s sym t in
@@ -188,6 +196,8 @@ module NFA
     requires { subset s a.states }
     variant  { cardinal s }
     ensures  { subset result a.states }
+    ensures  { forall c. mem c result -> exists q. mem q s /\ mem (q, sym, c) a.transitions }
+    ensures  { forall q, c. mem q s /\ mem (q, sym, c) a.transitions -> mem c result }
   =
     if is_empty s then empty
     else let st = pick s in
@@ -227,13 +237,23 @@ module NFA
     let rs = delta_ext s w a in
     let qs = fold_delta rs sym a Fset.empty in
       eclose_finals qs a Fset.empty *)
+      
+  predicate path (s: state) (w: word) (f: state) (a: automaton) 
+  =
+    mem s a.states /\ mem f a.states /\ forall x. LM.mem x w -> mem x (add eps a.alphabet) ->
+    match w with
+    | Nil -> s = f 
+    | Cons x Nil -> mem (s, x, f) a.transitions
+    | Cons x xs -> exists r. mem (r, x, f) a.transitions /\ path s xs r a
+    end
 
   let rec ghost function delta_ext (s: state) (w: word) (a: automaton) :
     fset state
     requires { mem s a.states }
     requires { forall x. LM.mem x w -> mem x (add eps a.alphabet) }
-    variant { length w }
-    ensures { subset result a.states }
+    variant  { length w }
+    ensures  { subset result a.states }
+    ensures  { forall r. mem r result <-> path s w r a }
   =
       match w with
       | Nil -> eclose (add s empty) a
