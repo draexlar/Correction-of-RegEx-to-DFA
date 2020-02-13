@@ -144,6 +144,8 @@ module NFA
     requires { subset s a.states }
     variant  { cardinal s }
     ensures  { subset result a.states }
+    ensures  { subset s result }
+    ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }
   =
     if is_empty s then empty
     else let q = pick s in
@@ -160,6 +162,8 @@ module NFA
     requires { subset s a.states }
     variant  { cardinal a.states - cardinal s }
     ensures  { subset result a.states }
+    ensures  { subset s result }
+    ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }
   =
     let ns = fold_next_states s a in
       if subset ns s then ns 
