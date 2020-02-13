@@ -121,6 +121,8 @@ module NFA
     (* provar subconjunto do que entrou *)
     variant { cardinal t }
     ensures { subset result t }
+    ensures { forall a, b, c. mem (a, b, c) result -> b = sym /\ a = s }
+    ensures { forall c. mem (s, sym, c) t -> mem (s, sym, c) result }
   =
     if is_empty t then empty
     else let elem = pick t in
@@ -145,7 +147,9 @@ module NFA
     variant  { cardinal s }
     ensures  { subset result a.states }
     ensures  { subset s result }
-    ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }
+    ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions)  }
+    (*ensures  { forall i, q. mem i result /\ mem (i, eps, q) a.transitions -> mem q result }*)
+    (*ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }*)
   =
     if is_empty s then empty
     else let q = pick s in
@@ -163,7 +167,8 @@ module NFA
     variant  { cardinal a.states - cardinal s }
     ensures  { subset result a.states }
     ensures  { subset s result }
-    ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }
+    (*ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i s /\ mem (i, eps, q) a.transitions)  }*)
+    ensures  { forall i, q. mem (i, eps, q) a.transitions /\ mem i result -> mem q result }
   =
     let ns = fold_next_states s a in
       if subset ns s then ns 
