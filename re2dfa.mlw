@@ -158,7 +158,6 @@ module NFA
     else let q = pick s in
          let t = BasicTypes.ST.to_fset a.transitions in
          let trans = filter_trans q eps t in
-         let nextStates = delta_get_3rd trans in
          let nxt_sts = add q (delta_get_3rd trans) in
            union nxt_sts (fold_next_states (remove q s) a)
 
@@ -174,12 +173,17 @@ module NFA
     variant  { cardinal a.states - cardinal s }
     ensures  { subset result a.states }
     ensures  { subset s result }
+    (*ensures  { forall x y. mem x s -> mem (x, eps, y) a.transitions -> mem y result }*)
     ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions)  }
     ensures  { forall i, q. mem i result /\ mem (i, eps, q) a.transitions -> mem q result }
+    (*ensures  { forall r. mem r result /\ not mem r s -> exists i. mem i result /\ mem (i, eps, r) a.transitions }*)
+    ensures  { is_empty a.transitions -> result = s }
   =
-    let ns = fold_next_states s a in
-      if subset ns s then ns 
-      else eclose (union s ns) a
+    let t = BasicTypes.ST.to_fset a.transitions in
+    if is_empty t then s
+    else let ns = fold_next_states s a in
+         if subset ns s then ns 
+         else eclose (union s ns) a
 
   (* returns states reachable from s through sym *)
   let ghost function delta (s: state) (sym: symbol) (a: automaton) : fset state
@@ -240,11 +244,14 @@ module NFA
       
   predicate path (s: state) (w: word) (f: state) (a: automaton) 
   =
-    mem s a.states /\ mem f a.states /\ forall x. LM.mem x w -> mem x (add eps a.alphabet) ->
+    mem s a.states ->
     match w with
-    | Nil -> s = f 
-    | Cons x Nil -> mem (s, x, f) a.transitions
-    | Cons x xs -> exists r. mem (r, x, f) a.transitions /\ path s xs r a
+    | Nil -> s = f \/ mem (s, eps, f) a.transitions
+    | Cons x Nil -> mem x (add eps a.alphabet) /\
+                    if x = eps then s = f \/ mem (s, x, f) a.transitions
+                    else mem (s, x, f) a.transitions
+    | Cons x xs -> mem x (add eps a.alphabet) /\
+                   exists r. mem (r, x, f) a.transitions /\ path s xs r a
     end
 
   let rec ghost function delta_ext (s: state) (w: word) (a: automaton) :
@@ -253,7 +260,8 @@ module NFA
     requires { forall x. LM.mem x w -> mem x (add eps a.alphabet) }
     variant  { length w }
     ensures  { subset result a.states }
-    ensures  { forall r. mem r result <-> path s w r a }
+    ensures  { forall r. path s w r a -> mem r result }
+    (*ensures  { forall r. mem r result -> (s = r /\ not (path s w r a)) \/ path s w r a }*)
   =
       match w with
       | Nil -> eclose (add s empty) a
@@ -299,6 +307,17 @@ module NFA
     let p = fun w -> inter (delta_ext a.start w a) a.finalStates <> empty in
     filter (sigma_ext a.alphabet) p
     
+  function automatonLangConstr (a: automaton) : fset word 
+  =
+    if is_empty a.transitions then
+      if is_empty a.finalStates then empty
+      else if mem a.start a.finalStates then singleton (Cons eps Nil)
+      else empty
+    else if cardinal a.transitions = 1 then
+      let (_, x, _) = pick a.transitions in
+        singleton (Cons x Nil)
+    else empty
+    
   (*lemma aux: forall s w a.
     mem w (sigma_ext a.alphabet) /\ mem s a.states ->
       match w with
@@ -306,10 +325,10 @@ module NFA
       | Cons x _ -> exists q. mem (s, x, q) a.transitions
       end*)
 
-  lemma langLength1:
+  (*lemma langLength1:
     forall a: automaton, f: state, sym: symbol.
       mem f a.finalStates /\ a.transitions = singleton (a.start, sym, f) ->
-      automatonLang a = singleton (Cons sym Nil)
+      automatonLang a = singleton (Cons sym Nil)*)
       
   (*lemma langContains:
     forall a: automaton, f: state, sym: symbol.
@@ -317,7 +336,7 @@ module NFA
       subset (singleton (Cons sym Nil)) (automatonLang a)*)
 
   let compile (r: regex) : automaton
-    ensures { regexLang r = automatonLang result }
+    ensures { regexLang r = automatonLangConstr result }
   = match r with
     | Empty -> let i = next_val c in
         { states = SS.add i (SS.empty ());
