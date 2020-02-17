@@ -265,6 +265,8 @@ module NFA
   
   (* constructive definition of the language of an automaton *)
   let ghost function automatonLangConstr (a: automaton) : fset word
+    requires { forall s, x, f. mem (s, x, f) a.transitions -> mem f a.finalStates }
+    ensures { forall w. mem w result -> inter (delta_ext a.start w a) a.finalStates <> empty }
   =
     let t = BasicTypes.ST.to_fset a.transitions in
     let finals = BasicTypes.SS.to_fset a.finalStates in
