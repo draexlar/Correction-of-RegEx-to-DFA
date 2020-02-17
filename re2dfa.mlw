@@ -37,6 +37,7 @@ module RegEx
   use BasicTypes
   use list.List
 
+  (* representation of regular expressions *)
   type regex =
       Empty
     | Eps
@@ -46,6 +47,7 @@ module RegEx
 
   use set.Fset
 
+  (* function that returns the language of a given regular expression r *)
   function regexLang (r: regex) : fset word =
     match r with
     | Empty -> empty
@@ -69,6 +71,7 @@ module NFA
  
   val constant start_const: state
 
+  (* representation of a finite automaton *)
   type automaton = {
     states: SS.set;
     alphabet: SA.set;
@@ -85,7 +88,7 @@ module NFA
 
   (* --- Operations over finite automatons --- *)
 
-  (* get starting state, symbol, and/or end state of all transitions in set  *)
+  (* returns a set of states obtained by the first projection of each transition in the set t  *)
   let rec ghost function delta_get_1st (t: fset transition) : fset state 
     variant { cardinal t }
     ensures { forall x. mem x result -> exists b c. mem (x, b, c) t }
@@ -96,7 +99,7 @@ module NFA
          let (a,_,_) = elem in
            add a (delta_get_1st (remove elem t))
     
-
+  (* returns a set of symbols obtained by the second projection of each transition in the set t  *)
   let rec ghost function delta_get_2nd (t: fset transition) : fset symbol
     variant { cardinal t }
     ensures { forall x. mem x result -> exists a c. mem (a, x, c) t }
@@ -107,6 +110,7 @@ module NFA
          let (_,b,_) = elem in
            add b (delta_get_2nd (remove elem t))
 
+  (* returns a set os states obtained by the third projection of each transition in the set t  *)
   let rec ghost function delta_get_3rd (t: fset transition) : fset state
     variant { cardinal t }
     ensures { forall x. mem x result -> exists a b. mem (a, b, x) t }
@@ -118,10 +122,9 @@ module NFA
            add c (delta_get_3rd (remove elem t))
   
   
+  (* returns all transitions in t begining in state s and computed by symbol sym *)
   let rec ghost function filter_trans (s: state) (sym: symbol) (t: fset transition) :
     fset transition
-    (* requires { mem s a.states } *)
-    (* provar subconjunto do que entrou *)
     variant { cardinal t }
     ensures { subset result t }
     ensures { forall a, b, c. mem (a, b, c) result -> b = sym /\ a = s }
@@ -134,16 +137,6 @@ module NFA
         add elem (filter_trans s sym (remove elem t))
       else filter_trans s sym (remove elem t)
 
-  (*(* returns the set of state s and all its states reachable by an epsilon transition, given s and an automaton *)
-  let ghost function next_eps (s: state) (a: automaton) : fset state
-    requires { mem s a.states }
-    ensures { subset result a.states }
-  =
-    let t = BasicTypes.ST.to_fset a.transitions in
-    let trans = filter_trans s eps t in
-    let nextStates = delta_get_3rd trans in
-    add s nextStates*)
-
   (* obtains the next states computed through epsilon transitions from each state in s *)
   let rec ghost function fold_next_states (s: fset state) (a: automaton) : fset state
     requires { subset s a.states }
@@ -152,7 +145,6 @@ module NFA
     ensures  { subset s result }
     ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions) }
     ensures  { forall i, q. mem i s /\ mem (i, eps, q) a.transitions -> mem q result }
-    (*ensures  { forall i, q. mem (i, eps, q) a.transitions -> mem i result /\ mem q result }*)
   =
     if is_empty s then empty
     else let q = pick s in
@@ -163,20 +155,14 @@ module NFA
 
   use int.Power
   
-  (*lemma close:
-    forall i, q, s, a. let result = fold_next_states s a in
-      mem i result /\ mem (i, eps, q) a.transitions -> mem q result*)
-
-  (* computes the eclose for each state in sts *)
+  (* computes the epsilone-closure for each state in s *)
   let rec ghost function eclose (s: fset state) (a: automaton) : fset state
     requires { subset s a.states }
     variant  { cardinal a.states - cardinal s }
     ensures  { subset result a.states }
     ensures  { subset s result }
-    (*ensures  { forall x y. mem x s -> mem (x, eps, y) a.transitions -> mem y result }*)
     ensures  { forall q. mem q result -> mem q s \/ (exists i. mem i result /\ mem (i, eps, q) a.transitions)  }
     ensures  { forall i, q. mem i result /\ mem (i, eps, q) a.transitions -> mem q result }
-    (*ensures  { forall r. mem r result /\ not mem r s -> exists i. mem i result /\ mem (i, eps, r) a.transitions }*)
     ensures  { is_empty a.transitions -> result = s }
   =
     let t = BasicTypes.ST.to_fset a.transitions in
@@ -208,40 +194,8 @@ module NFA
          let ds = delta st sym a in
          union ds (fold_delta (remove st s) sym a)
 
-  (*(* computes eclose for each state in s *)
-  let rec ghost function eclose_finals (s: fset state) (a: automaton) (ns: fset state) : fset state
-    requires { subset s a.states }
-    requires { subset ns a.states }
-    variant  { cardinal s }
-    ensures  { subset result a.states }
-  =
-    if is_empty s then ns
-    else let q = pick s in
-         let qs = eclose q a in
-         eclose_finals (remove q s) a (union qs ns)*)
 
-  (* extended transition function *)
-  (*let rec ghost function delta_ext (s: state) (w: word) (a: automaton) : fset state
-    requires { mem s a.states }
-    variant { length w }
-    ensures { subset result a.states }
-  =
-    match w with
-    | Nil -> eclose s a
-    | Cons x Nil -> if eq x eps then eclose s a
-                    else compute_delta_ext s x Nil a
-    | Cons x xs ->  compute_delta_ext s x xs a
-    end
-  with ghost compute_delta_ext (s: state) (sym: symbol) (w: word) (a: automaton) : fset state
-    requires { mem s a.states }
-    (* variant { length w } *)
-    ensures { subset result a.states }
-  =
-    let trans = BasicTypes.ST.to_fset a.transitions in
-    let rs = delta_ext s w a in
-    let qs = fold_delta rs sym a Fset.empty in
-      eclose_finals qs a Fset.empty *)
-      
+  (* determines if there is a path from s to f, through a word w *)    
   predicate path (s: state) (w: word) (f: state) (a: automaton) 
   =
     mem s a.states ->
@@ -254,6 +208,7 @@ module NFA
                    exists r. mem (r, x, f) a.transitions /\ path s xs r a
     end
 
+  (* extended transition function: returns the set of states reachable from s trhough a word s *)
   let rec ghost function delta_ext (s: state) (w: word) (a: automaton) :
     fset state
     requires { mem s a.states }
@@ -273,7 +228,6 @@ module NFA
                       let qs = fold_delta rs x a in
                         eclose qs a
       end
-
 
 
   (* --- Compile automaton --- *)
@@ -299,24 +253,30 @@ module NFA
   (* axiom delta_ext_symb: forall i a l. *)
   (*   delta_ext i l a = add a.start a.finalStates *)
 
+  (* alphabet closure *)
   function sigma_ext (ss: fset symbol) : fset word =
     let ss = map (fun s -> Cons s Nil) ss in
     add (Cons eps Nil) ss
 
+  (* computes the language of a given automaton *)
   function automatonLang (a: automaton) : fset word =
     let p = fun w -> inter (delta_ext a.start w a) a.finalStates <> empty in
     filter (sigma_ext a.alphabet) p
-    
-  function automatonLangConstr (a: automaton) : fset word 
+  
+  (* constructive definition of the language of an automaton *)
+  let ghost function automatonLangConstr (a: automaton) : fset word
   =
-    if is_empty a.transitions then
-      if is_empty a.finalStates then empty
-      else if mem a.start a.finalStates then singleton (Cons eps Nil)
-      else empty
-    else if cardinal a.transitions = 1 then
-      let (_, x, _) = pick a.transitions in
+    let t = BasicTypes.ST.to_fset a.transitions in
+    let finals = BasicTypes.SS.to_fset a.finalStates in
+    let emp: fset word = BasicTypes.SL.to_fset (BasicTypes.SL.empty ()) in 
+    if is_empty t then
+      if is_empty finals then emp
+      else if mem a.start finals then singleton (Cons eps Nil)
+      else emp
+    else if cardinal t = 1 then
+      let (_, x, _) = pick t in
         singleton (Cons x Nil)
-    else empty
+    else emp
     
   (*lemma aux: forall s w a.
     mem w (sigma_ext a.alphabet) /\ mem s a.states ->
@@ -335,6 +295,7 @@ module NFA
       mem f a.finalStates /\ mem sym a.alphabet /\ subset (singleton (a.start, sym, f)) (a.transitions) ->
       subset (singleton (Cons sym Nil)) (automatonLang a)*)
 
+  (* computes the equivalent finite automaton of a given regular expression r *)
   let compile (r: regex) : automaton
     ensures { regexLang r = automatonLangConstr result }
   = match r with
