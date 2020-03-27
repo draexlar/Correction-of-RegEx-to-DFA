@@ -257,16 +257,22 @@ module NFA
     let p = fun w -> inter (delta_ext a.start w a) a.finalStates <> empty in
     filter (sigma_ext a.alphabet) p
     
-  function automatonLangConstr (a: automaton) : fset word 
+  (* constructive definition of the language of an automaton *)
+  let ghost function automatonLangConstr (a: automaton) : fset word
+    (* requires { forall s, x, f. mem (s, x, f) a.transitions -> mem f a.finalStates } *)
+    ensures { forall w. mem w result -> inter (delta_ext a.start w a) a.finalStates <> empty }
   =
-    if is_empty a.transitions then
-      if is_empty a.finalStates then empty
-      else if mem a.start a.finalStates then singleton (Cons eps Nil)
-      else empty
-    else if cardinal a.transitions = 1 then
-      let (_, x, _) = pick a.transitions in
+    let t = BasicTypes.ST.to_fset a.transitions in
+    let finals = BasicTypes.SS.to_fset a.finalStates in
+    let emp: fset word = BasicTypes.SL.to_fset (BasicTypes.SL.empty ()) in 
+    if is_empty t then
+      if is_empty finals then emp
+      else if mem a.start finals then singleton (Cons eps Nil)
+      else emp
+    else if cardinal t = 1 then
+      let (_, x, _) = pick t in
         singleton (Cons x Nil)
-    else empty
+    else emp
     
   (*lemma aux: forall s w a.
     mem w (sigma_ext a.alphabet) /\ mem s a.states ->

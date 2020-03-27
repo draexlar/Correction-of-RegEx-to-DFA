@@ -5,9 +5,9 @@
 <prover id="0" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="1" name="Z3" version="4.8.6" timelimit="5" steplimit="0" memlimit="1000"/>
 <prover id="2" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
-<file format="whyml" proved="true">
+<file format="whyml">
 <path name=".."/><path name="re2dfa.mlw"/>
-<theory name="NFA" proved="true">
+<theory name="NFA">
  <goal name="automaton&#39;vc" expl="VC for automaton" proved="true">
  <proof prover="0"><result status="valid" time="0.36"/></proof>
  </goal>
@@ -242,32 +242,32 @@
   </goal>
  </transf>
  </goal>
- <goal name="compile&#39;vc" expl="VC for compile" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="compile&#39;vc.0" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.20"/></proof>
+ <goal name="compile&#39;vc" expl="VC for compile">
+ <transf name="split_vc" >
+  <goal name="compile&#39;vc.0" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.20"/></proof>
   </goal>
-  <goal name="compile&#39;vc.1" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.19"/></proof>
+  <goal name="compile&#39;vc.1" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.19"/></proof>
   </goal>
-  <goal name="compile&#39;vc.2" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.25"/></proof>
+  <goal name="compile&#39;vc.2" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.25"/></proof>
   </goal>
-  <goal name="compile&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.36"/></proof>
+  <goal name="compile&#39;vc.3" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.36"/></proof>
   </goal>
-  <goal name="compile&#39;vc.4" expl="postcondition" proved="true">
-  <transf name="split_vc" proved="true" >
-   <goal name="compile&#39;vc.4.0" expl="postcondition" proved="true">
-   <transf name="inline_goal" proved="true" >
-    <goal name="compile&#39;vc.4.0.0" expl="postcondition" proved="true">
-    <transf name="subst_all" proved="true" >
-     <goal name="compile&#39;vc.4.0.0.0" expl="postcondition" proved="true">
-     <transf name="compile_match" proved="true" >
-      <goal name="compile&#39;vc.4.0.0.0.0" expl="postcondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.25"/></proof>
-      <proof prover="1"><result status="valid" time="0.10" steps="246594"/></proof>
-      <proof prover="2" timelimit="5"><result status="valid" time="0.03" steps="39"/></proof>
+  <goal name="compile&#39;vc.4" expl="postcondition">
+  <transf name="split_vc" >
+   <goal name="compile&#39;vc.4.0" expl="postcondition">
+   <transf name="inline_goal" >
+    <goal name="compile&#39;vc.4.0.0" expl="postcondition">
+    <transf name="subst_all" >
+     <goal name="compile&#39;vc.4.0.0.0" expl="postcondition">
+     <transf name="compile_match" >
+      <goal name="compile&#39;vc.4.0.0.0.0" expl="postcondition">
+      <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
+      <proof prover="1" obsolete="true"><result status="highfailure" time="4.37" steps="4946854"/></proof>
+      <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
       </goal>
      </transf>
      </goal>
@@ -277,29 +277,29 @@
    </goal>
   </transf>
   </goal>
-  <goal name="compile&#39;vc.5" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.33"/></proof>
+  <goal name="compile&#39;vc.5" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.33"/></proof>
   </goal>
-  <goal name="compile&#39;vc.6" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.20"/></proof>
+  <goal name="compile&#39;vc.6" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.20"/></proof>
   </goal>
-  <goal name="compile&#39;vc.7" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.53"/></proof>
+  <goal name="compile&#39;vc.7" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.53"/></proof>
   </goal>
-  <goal name="compile&#39;vc.8" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.50"/></proof>
+  <goal name="compile&#39;vc.8" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.50"/></proof>
   </goal>
-  <goal name="compile&#39;vc.9" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.41"/></proof>
+  <goal name="compile&#39;vc.9" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.41"/></proof>
   </goal>
-  <goal name="compile&#39;vc.10" expl="postcondition" proved="true">
-  <transf name="unfold" proved="true" arg1="regexLang">
-   <goal name="compile&#39;vc.10.0" expl="postcondition" proved="true">
-   <transf name="subst_all" proved="true" >
-    <goal name="compile&#39;vc.10.0.0" expl="postcondition" proved="true">
-    <transf name="compile_match" proved="true" >
-     <goal name="compile&#39;vc.10.0.0.0" expl="postcondition" proved="true">
-     <proof prover="2"><result status="valid" time="0.17" steps="617"/></proof>
+  <goal name="compile&#39;vc.10" expl="postcondition">
+  <transf name="unfold" arg1="regexLang">
+   <goal name="compile&#39;vc.10.0" expl="postcondition">
+   <transf name="subst_all" >
+    <goal name="compile&#39;vc.10.0.0" expl="postcondition">
+    <transf name="compile_match" >
+     <goal name="compile&#39;vc.10.0.0.0" expl="postcondition">
+     <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
      </goal>
     </transf>
     </goal>
@@ -307,33 +307,33 @@
    </goal>
   </transf>
   </goal>
-  <goal name="compile&#39;vc.11" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.32"/></proof>
+  <goal name="compile&#39;vc.11" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.32"/></proof>
   </goal>
-  <goal name="compile&#39;vc.12" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.20"/></proof>
+  <goal name="compile&#39;vc.12" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.20"/></proof>
   </goal>
-  <goal name="compile&#39;vc.13" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.33"/></proof>
+  <goal name="compile&#39;vc.13" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.33"/></proof>
   </goal>
-  <goal name="compile&#39;vc.14" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.36"/></proof>
+  <goal name="compile&#39;vc.14" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.36"/></proof>
   </goal>
-  <goal name="compile&#39;vc.15" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.27"/></proof>
+  <goal name="compile&#39;vc.15" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.27"/></proof>
   </goal>
-  <goal name="compile&#39;vc.16" expl="postcondition" proved="true">
-  <transf name="subst_all" proved="true" >
-   <goal name="compile&#39;vc.16.0" expl="postcondition" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="compile&#39;vc.16.0.0" expl="postcondition" proved="true">
-    <transf name="inline_goal" proved="true" >
-     <goal name="compile&#39;vc.16.0.0.0" expl="postcondition" proved="true">
-     <transf name="split_all_full" proved="true" >
-      <goal name="compile&#39;vc.16.0.0.0.0" expl="postcondition" proved="true">
-      <transf name="split_vc" proved="true" >
-       <goal name="compile&#39;vc.16.0.0.0.0.0" expl="postcondition" proved="true">
-       <proof prover="0"><result status="valid" time="0.33"/></proof>
+  <goal name="compile&#39;vc.16" expl="postcondition">
+  <transf name="subst_all" >
+   <goal name="compile&#39;vc.16.0" expl="postcondition">
+   <transf name="split_vc" >
+    <goal name="compile&#39;vc.16.0.0" expl="postcondition">
+    <transf name="inline_goal" >
+     <goal name="compile&#39;vc.16.0.0.0" expl="postcondition">
+     <transf name="split_all_full" >
+      <goal name="compile&#39;vc.16.0.0.0.0" expl="postcondition">
+      <transf name="split_vc" >
+       <goal name="compile&#39;vc.16.0.0.0.0.0" expl="postcondition">
+       <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
        </goal>
       </transf>
       </goal>
