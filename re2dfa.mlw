@@ -259,8 +259,12 @@ module NFA
     
   (* constructive definition of the language of an automaton *)
   let ghost function automatonLangConstr (a: automaton) : fset word
-    (* requires { forall s, x, f. mem (s, x, f) a.transitions -> mem f a.finalStates } *)
-    ensures { forall w. mem w result -> inter (delta_ext a.start w a) a.finalStates <> empty }
+    requires { cardinal a.transitions > 0 -> forall s. mem s a.states -> exists q, w. mem (s, w, q) a.transitions \/ mem (q, w, s) a.transitions }
+    requires { cardinal a.transitions > 0 -> exists w q. mem (a.start, w, q) a.transitions }
+    requires { a.transitions <> empty -> a.finalStates <> empty }
+    requires { forall f. mem f a.finalStates -> exists q, w. mem (q, w, f) a.transitions }
+    ensures  { result <> empty -> a.finalStates <> empty }
+    ensures  { forall w. mem w result -> inter (delta_ext a.start w a) a.finalStates <> empty }
   =
     let t = BasicTypes.ST.to_fset a.transitions in
     let finals = BasicTypes.SS.to_fset a.finalStates in
@@ -271,7 +275,7 @@ module NFA
       else emp
     else if cardinal t = 1 then
       let (_, x, _) = pick t in
-        singleton (Cons x Nil)
+        add (Cons x Nil) empty
     else emp
     
   (*lemma aux: forall s w a.
@@ -292,6 +296,11 @@ module NFA
       subset (singleton (Cons sym Nil)) (automatonLang a)*)
 
   let compile (r: regex) : automaton
+    (* + ensures, elo menos 1 para cada caso da traducao *)
+    ensures { cardinal result.transitions > 0 -> forall s. mem s result.states -> exists q, w. mem (s, w, q) result.transitions \/ mem (q, w, s) result.transitions }
+    ensures { cardinal result.transitions > 0 -> exists w q. mem (result.start, w, q) result.transitions }
+    ensures { result.transitions <> empty -> result.finalStates <> empty }
+    ensures { forall f. mem f result.finalStates -> exists q, w. mem (q, w, f) result.transitions }
     ensures { regexLang r = automatonLangConstr result }
   = match r with
     | Empty -> let i = next_val c in
