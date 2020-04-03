@@ -217,7 +217,7 @@ module NFA
     requires { forall x. LM.mem x w -> mem x (add eps a.alphabet) }
     variant  { length w }
     ensures  { subset result a.states }
-    ensures  { forall r. path s w r a -> mem r result }
+    ensures  { forall r. path s w r a <-> mem r result }
     (*ensures  { forall r. mem r result -> (s = r /\ not (path s w r a)) \/ path s w r a }*)
   =
       match w with
@@ -261,10 +261,19 @@ module NFA
   let ghost function automatonLangConstr (a: automaton) : fset word
     requires { cardinal a.transitions > 0 -> forall s. mem s a.states -> exists q, w. mem (s, w, q) a.transitions \/ mem (q, w, s) a.transitions }
     requires { cardinal a.transitions > 0 -> exists w q. mem (a.start, w, q) a.transitions }
+    (* requires { cardinal a.transitions = 1 -> forall x, q. mem (a.start, x, q) a.transitions /\ mem q a.finalStates } *)
     requires { a.transitions <> empty -> a.finalStates <> empty }
     requires { forall f. mem f a.finalStates -> exists q, w. mem (q, w, f) a.transitions }
+    (*ensures  { result <> empty <-> a.finalStates <> empty } ultimo caso não funciona *)
     ensures  { result <> empty -> a.finalStates <> empty }
-    ensures  { forall w. mem w result -> inter (delta_ext a.start w a) a.finalStates <> empty }
+    ensures  { (is_empty a.transitions /\ mem a.start a.finalStates) -> result = singleton (Cons eps Nil) }
+    ensures  { (is_empty a.transitions /\ not mem a.start a.finalStates) -> result = empty }
+    ensures  { exists x. a.transitions = singleton (a.start, x, pick a.finalStates) <-> result = (singleton (Cons x Nil))}
+    (* ensures  { forall w. mem w result -> exists x, v, q, r. w = Cons x v /\ mem (q, x, r) a.transitions } *)
+    ensures  { forall w. mem w result -> forall x. LM.mem x w -> exists q, r. mem (q, x, r) a.transitions }
+    (*ensures  { forall w. mem w result -> forall x. LM.mem x w -> mem x (add eps a.alphabet) } *)
+    ensures  { forall w. mem w result <-> path a.start w (pick a.finalStates) a }
+    ensures  { forall w. mem w result <-> ( inter (delta_ext a.start w a) a.finalStates <> empty /\ (forall x. LM.mem x w -> mem x (add eps a.alphabet)) ) }
   =
     let t = BasicTypes.ST.to_fset a.transitions in
     let finals = BasicTypes.SS.to_fset a.finalStates in
@@ -297,8 +306,10 @@ module NFA
 
   let compile (r: regex) : automaton
     (* + ensures, elo menos 1 para cada caso da traducao *)
+    ensures { cardinal result.transitions = 1 -> cardinal result.finalStates = 1 }
     ensures { cardinal result.transitions > 0 -> forall s. mem s result.states -> exists q, w. mem (s, w, q) result.transitions \/ mem (q, w, s) result.transitions }
     ensures { cardinal result.transitions > 0 -> exists w q. mem (result.start, w, q) result.transitions }
+    (*ensures { cardinal result.transitions = 1 -> forall x, q. result.transitions = (add (result.start, x, q) empty) /\ mem q result.finalStates } *)
     ensures { result.transitions <> empty -> result.finalStates <> empty }
     ensures { forall f. mem f result.finalStates -> exists q, w. mem (q, w, f) result.transitions }
     ensures { regexLang r = automatonLangConstr result }
@@ -313,26 +324,26 @@ module NFA
         let final = next_val c in
         let states = SS.add start (SS.empty ()) in
         let states = SS.add final states in
-        let r = { states = states;
+        let a = { states = states;
           alphabet = SA.empty ();
           start = start;
           transitions = ST.add (start, eps, final) (ST.empty ());
           finalStates = SS.add final (SS.empty ()) } in
-        assert { exists q. mem (r.start, eps, q) r.transitions };
+        assert { exists q. mem (a.start, eps, q) a.transitions };
         (*assert { delta_ext r.start (Cons eps Nil) r = add r.start r.finalStates };*)
-        r
-    | Symb a -> let start = next_val c in
+        a
+    | Symb x -> let start = next_val c in
         let final = next_val c in
         let states = SS.add start (SS.empty ()) in
         let states = SS.add final states in
-        let r = { states = states;
-          alphabet = SA.add a (SA.empty ()) ;
+        let a = { states = states;
+          alphabet = SA.add x (SA.empty ()) ;
           start = start;
-          transitions = ST.add (start, a, final) (ST.empty ());
+          transitions = ST.add (start, x, final) (ST.empty ());
           finalStates = SS.add final (SS.empty ()) } in
-        assert { exists q. mem (r.start, a, q) r.transitions };
+        assert { exists q. mem (a.start, x, q) a.transitions };
         (*assert { delta_ext r.start (Cons a Nil) r = r.finalStates };*)
-        r
+        a
   end
 
 end
