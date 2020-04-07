@@ -272,7 +272,7 @@ module NFA
     (* ensures  { forall w. mem w result -> exists x, v, q, r. w = Cons x v /\ mem (q, x, r) a.transitions } *)
     ensures  { forall w. mem w result -> forall x. LM.mem x w -> exists q, r. mem (q, x, r) a.transitions }
     (*ensures  { forall w. mem w result -> forall x. LM.mem x w -> mem x (add eps a.alphabet) } *)
-    ensures  { forall w. mem w result <-> path a.start w (pick a.finalStates) a }
+    ensures  { forall w. mem w result <-> path a.start w (pick a.finalStates) a } (* não funciona se finalStates empty *)
     ensures  { forall w. mem w result <-> ( inter (delta_ext a.start w a) a.finalStates <> empty /\ (forall x. LM.mem x w -> mem x (add eps a.alphabet)) ) }
   =
     let t = BasicTypes.ST.to_fset a.transitions in
