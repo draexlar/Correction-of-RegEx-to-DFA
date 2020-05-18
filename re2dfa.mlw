@@ -69,7 +69,7 @@ module RevListProp
     forall w xs ys:list 'a, x y:'a. w = Cons x xs /\ reverse w = Cons y ys -> hd (reverse (Cons y ys)) = x
     
   lemma hd_tl_reverse3:
-    forall w xs ys:list 'a, x y:'a. w = Cons x xs /\ xs <> Nil -> hd (reverse w) = hd (reverse xs)
+    forall w xs:list 'a, x:'a. w = Cons x xs /\ xs <> Nil -> hd (reverse w) = hd (reverse xs)
     
   lemma hd_tl_reverse4:
     forall w xs ys:list 'a, x y:'a. w = Cons x xs /\ xs <> Nil /\ reverse w = Cons y ys -> hd (reverse ys) = x

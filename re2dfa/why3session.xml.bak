@@ -4,7 +4,7 @@
 <why3session shape_version="8">
 <prover id="0" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="1" name="Z3" version="4.8.6" timelimit="5" steplimit="0" memlimit="1000"/>
-<prover id="2" name="Alt-Ergo" version="2.3.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="re2dfa.mlw"/>
 <theory name="RevListProp" proved="true">
@@ -23,12 +23,12 @@
  <goal name="hd_tl_reverse3" proved="true">
  <proof prover="0"><result status="valid" time="0.13"/></proof>
  <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="10716162"/></proof>
- <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+ <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
  </goal>
  <goal name="hd_tl_reverse4" proved="true">
  <proof prover="0"><result status="valid" time="0.06"/></proof>
  <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1519997"/></proof>
- <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
  </goal>
 </theory>
 <theory name="NFA" proved="true">
@@ -100,7 +100,7 @@
   </goal>
   <goal name="filter_trans&#39;vc.5" expl="postcondition" proved="true">
   <proof prover="0"><result status="timeout" time="1.00"/></proof>
-  <proof prover="2" timelimit="1"><result status="valid" time="0.13" steps="247"/></proof>
+  <proof prover="2"><result status="valid" time="0.13" steps="247"/></proof>
   </goal>
  </transf>
  </goal>
@@ -134,12 +134,12 @@
    </goal>
    <goal name="fold_next_states&#39;vc.5.2" expl="postcondition" proved="true">
    <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="2" timelimit="1"><result status="valid" time="0.60" steps="1887"/></proof>
+   <proof prover="2"><result status="valid" time="0.60" steps="1887"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="fold_next_states&#39;vc.6" expl="postcondition" proved="true">
-  <proof prover="2" timelimit="1"><result status="valid" time="0.13" steps="347"/></proof>
+  <proof prover="2"><result status="valid" time="0.13" steps="347"/></proof>
   </goal>
   <goal name="fold_next_states&#39;vc.7" expl="postcondition" proved="true">
   <transf name="split_vc" proved="true" >
@@ -158,7 +158,7 @@
  </goal>
  <goal name="eclose&#39;vc" expl="VC for eclose" proved="true">
  <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
- <proof prover="2"><result status="valid" time="1.65" steps="7619"/></proof>
+ <proof prover="2" timelimit="5"><result status="valid" time="1.65" steps="7619"/></proof>
  </goal>
  <goal name="fold_delta&#39;vc" expl="VC for fold_delta" proved="true">
  <transf name="split_vc" proved="true" >
@@ -176,7 +176,7 @@
   </goal>
   <goal name="fold_delta&#39;vc.4" expl="postcondition" proved="true">
   <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-  <proof prover="2"><result status="valid" time="3.69" steps="8370"/></proof>
+  <proof prover="2" timelimit="5"><result status="valid" time="3.69" steps="8370"/></proof>
   </goal>
   <goal name="fold_delta&#39;vc.5" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.18"/></proof>
@@ -236,7 +236,7 @@
   <goal name="delta_ext&#39;vc.14" expl="postcondition" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
   <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1963464"/></proof>
-  <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="delta_ext&#39;vc.14.0" expl="postcondition" proved="true">
    <proof prover="0"><result status="valid" time="0.15"/></proof>
@@ -268,15 +268,15 @@
      <transf name="destruct" proved="true" arg1="H">
       <goal name="delta_ext&#39;vc.15.1.0.1.0" expl="postcondition" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
-      <proof prover="2"><result status="valid" time="0.05" steps="25"/></proof>
+      <proof prover="2" timelimit="5"><result status="valid" time="0.05" steps="25"/></proof>
       </goal>
       <goal name="delta_ext&#39;vc.15.1.0.1.1" expl="postcondition" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="0.18" steps="667"/></proof>
+      <proof prover="2"><result status="valid" time="0.18" steps="667"/></proof>
       </goal>
       <goal name="delta_ext&#39;vc.15.1.0.1.2" expl="postcondition" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="0.46" steps="1219"/></proof>
+      <proof prover="2"><result status="valid" time="0.46" steps="1219"/></proof>
       </goal>
      </transf>
      </goal>
@@ -299,7 +299,7 @@
       <goal name="delta_ext&#39;vc.15.2.0.1.1" expl="postcondition" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
       <proof prover="1" timelimit="1" obsolete="true"><result status="highfailure" time="1.22" steps="1507131"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="1.92" steps="3180"/></proof>
+      <proof prover="2"><result status="valid" time="1.92" steps="3180"/></proof>
       </goal>
       <goal name="delta_ext&#39;vc.15.2.0.1.2" expl="postcondition" proved="true">
       <transf name="split_vc" proved="true" >
@@ -313,7 +313,7 @@
          <goal name="delta_ext&#39;vc.15.2.0.1.2.0.0.1" expl="postcondition" proved="true">
          <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
          <proof prover="1" timelimit="1"><result status="timeout" time="1.00" steps="1781232"/></proof>
-         <proof prover="2"><result status="valid" time="1.26" steps="3752"/></proof>
+         <proof prover="2" timelimit="5"><result status="valid" time="1.26" steps="3752"/></proof>
          </goal>
         </transf>
         </goal>
@@ -339,11 +339,11 @@
      <transf name="destruct" proved="true" arg1="H">
       <goal name="delta_ext&#39;vc.15.3.0.1.0" expl="postcondition" proved="true">
       <proof prover="0"><result status="valid" time="0.43"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="0.03" steps="30"/></proof>
+      <proof prover="2"><result status="valid" time="0.03" steps="30"/></proof>
       </goal>
       <goal name="delta_ext&#39;vc.15.3.0.1.1" expl="postcondition" proved="true">
       <proof prover="0"><result status="valid" time="0.44"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="0.13" steps="271"/></proof>
+      <proof prover="2"><result status="valid" time="0.13" steps="271"/></proof>
       </goal>
       <goal name="delta_ext&#39;vc.15.3.0.1.2" expl="postcondition" proved="true">
       <transf name="destruct" proved="true" arg1="H">
@@ -359,31 +359,31 @@
          <transf name="case" arg1="(xs = (Nil: list char))">
           <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.0" expl="true case (postcondition)">
           <proof prover="0"><result status="valid" time="0.50"/></proof>
-          <proof prover="2" timelimit="1" obsolete="true"><result status="valid" time="0.08" steps="260"/></proof>
+          <proof prover="2" obsolete="true"><result status="valid" time="0.08" steps="260"/></proof>
           </goal>
           <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1" expl="false case (postcondition)">
           <transf name="assert" arg1="(x = hd (reverse (Cons w1 w)) )">
            <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1.0" expl="asserted formula">
            <proof prover="0"><result status="valid" time="0.28"/></proof>
            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="14070397"/></proof>
-           <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+           <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
            </goal>
            <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1.1" expl="false case (postcondition)">
            <proof prover="0"><result status="valid" time="0.45"/></proof>
            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="12766349"/></proof>
-           <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+           <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
            </goal>
           </transf>
           <transf name="assert" arg1="( hd (reverse xs) = x1 )">
            <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1.0" expl="asserted formula">
            <proof prover="0"><result status="valid" time="0.59"/></proof>
            <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="2905028"/></proof>
-           <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
+           <proof prover="2" obsolete="true"><result status="timeout" time="1.00"/></proof>
            </goal>
            <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1.1" expl="false case (postcondition)">
            <proof prover="0"><result status="valid" time="0.48"/></proof>
            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="12370983"/></proof>
-           <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+           <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
            </goal>
           </transf>
           <transf name="assert" arg1="( xs = tl (reverse w2) )">
@@ -393,7 +393,7 @@
            <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1.1" expl="false case (postcondition)">
            <proof prover="0"><result status="valid" time="0.53"/></proof>
            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="13114293"/></proof>
-           <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+           <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
            </goal>
           </transf>
           <transf name="assert" arg1="( xs = tl (reverse (Cons x1 (Cons w1 w))) )">
@@ -403,7 +403,7 @@
            <goal name="delta_ext&#39;vc.15.3.0.1.2.0.0.0.1.1" expl="false case (postcondition)">
            <proof prover="0"><result status="valid" time="0.54"/></proof>
            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="13362742"/></proof>
-           <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+           <proof prover="2" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
            </goal>
           </transf>
           </goal>
@@ -454,18 +454,18 @@
             <transf name="destruct" proved="true" arg1="H">
              <goal name="trans_from_start.0.0.0.0.0.0.0.0.0.0.1.0" expl="asserted formula" proved="true">
              <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-             <proof prover="2"><result status="valid" time="0.05" steps="17"/></proof>
+             <proof prover="2" timelimit="5"><result status="valid" time="0.05" steps="17"/></proof>
              </goal>
              <goal name="trans_from_start.0.0.0.0.0.0.0.0.0.0.1.1" expl="asserted formula" proved="true">
              <transf name="destruct" proved="true" arg1="H">
               <goal name="trans_from_start.0.0.0.0.0.0.0.0.0.0.1.1.0" expl="asserted formula" proved="true">
               <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-              <proof prover="2" timelimit="1"><result status="valid" time="0.05" steps="176"/></proof>
+              <proof prover="2"><result status="valid" time="0.05" steps="176"/></proof>
               </goal>
               <goal name="trans_from_start.0.0.0.0.0.0.0.0.0.0.1.1.1" expl="asserted formula" proved="true">
               <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
               <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="9969014"/></proof>
-              <proof prover="2"><result status="valid" time="0.05" steps="86"/></proof>
+              <proof prover="2" timelimit="5"><result status="valid" time="0.05" steps="86"/></proof>
               </goal>
              </transf>
              </goal>
@@ -487,7 +487,7 @@
        <goal name="trans_from_start.0.0.0.0.0.1" proved="true">
        <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
        <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="7729267"/></proof>
-       <proof prover="2"><result status="valid" time="0.03" steps="39"/></proof>
+       <proof prover="2" timelimit="5"><result status="valid" time="0.03" steps="39"/></proof>
        </goal>
       </transf>
       </goal>
@@ -503,7 +503,7 @@
  </goal>
  <goal name="sigma_ext&#39;vc" expl="VC for sigma_ext" proved="true">
  <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
- <proof prover="2" timelimit="1"><result status="valid" time="0.09" steps="365"/></proof>
+ <proof prover="2"><result status="valid" time="0.09" steps="365"/></proof>
  </goal>
  <goal name="automatonLangConstr&#39;vc" expl="VC for automatonLangConstr" proved="true">
  <transf name="split_vc" proved="true" >
@@ -522,15 +522,6 @@
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.3.0.0" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.43"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.3.1.2" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.39"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.3.1.3" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.39"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.3.1.1" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.59"/></proof>
     </goal>
    </transf>
    </goal>
@@ -561,19 +552,7 @@
      <goal name="automatonLangConstr&#39;vc.4.0.0.0" expl="postcondition" proved="true">
      <proof prover="0" timelimit="5"><result status="valid" time="0.31"/></proof>
      </goal>
-     <goal name="automatonLangConstr&#39;vc.4.1.0.0" expl="postcondition">
-     <proof prover="0" timelimit="5"><result status="valid" time="0.18"/></proof>
-     </goal>
     </transf>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.4.1.1" expl="postcondition">
-    <proof prover="0" timelimit="5"><result status="valid" time="0.42"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.4.1.3" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.39"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.4.1.2" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.47"/></proof>
     </goal>
    </transf>
    </goal>
@@ -625,8 +604,6 @@
      </goal>
      <goal name="automatonLangConstr&#39;vc.6.0.1.3" expl="postcondition" proved="true">
      <proof prover="0" timelimit="5"><result status="valid" time="0.26"/></proof>
-     <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="2073277"/></proof>
-     <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
      </goal>
     </transf>
     </goal>
@@ -641,23 +618,20 @@
     <transf name="split_vc" proved="true" >
      <goal name="automatonLangConstr&#39;vc.6.1.1.0" expl="postcondition" proved="true">
      <proof prover="0" timelimit="5"><result status="valid" time="0.31"/></proof>
-     <proof prover="2"><result status="valid" time="0.11" steps="438"/></proof>
+     <proof prover="2" timelimit="5"><result status="valid" time="0.11" steps="438"/></proof>
      </goal>
      <goal name="automatonLangConstr&#39;vc.6.1.1.1" expl="postcondition" proved="true">
      <transf name="split_vc" proved="true" >
       <goal name="automatonLangConstr&#39;vc.6.1.1.1.0" expl="postcondition" proved="true">
-      <proof prover="0"><result status="timeout" time="1.00"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="0.61" steps="2872"/></proof>
+      <proof prover="2"><result status="valid" time="0.61" steps="2872"/></proof>
       </goal>
       <goal name="automatonLangConstr&#39;vc.6.1.1.1.1" expl="postcondition" proved="true">
-      <proof prover="0"><result status="timeout" time="1.00"/></proof>
-      <proof prover="2" timelimit="1"><result status="valid" time="0.40" steps="1531"/></proof>
+      <proof prover="2"><result status="valid" time="0.40" steps="1531"/></proof>
       </goal>
      </transf>
      </goal>
      <goal name="automatonLangConstr&#39;vc.6.1.1.2" expl="postcondition" proved="true">
-     <proof prover="0"><result status="timeout" time="1.00"/></proof>
-     <proof prover="2" timelimit="1"><result status="valid" time="0.32" steps="1513"/></proof>
+     <proof prover="2"><result status="valid" time="0.32" steps="1513"/></proof>
      </goal>
      <goal name="automatonLangConstr&#39;vc.6.1.1.3" expl="postcondition" proved="true">
      <proof prover="0"><result status="valid" time="0.24"/></proof>
@@ -667,9 +641,6 @@
    </transf>
    </goal>
    <goal name="automatonLangConstr&#39;vc.6.2" expl="postcondition" proved="true">
-   <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="1" timelimit="1" obsolete="true"><result status="highfailure" time="0.77" steps="956725"/></proof>
-   <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.6.2.0" expl="postcondition" proved="true">
     <transf name="split_vc" proved="true" >
@@ -678,72 +649,7 @@
       <goal name="automatonLangConstr&#39;vc.6.2.0.0.0" expl="postcondition" proved="true">
       <proof prover="0" timelimit="5"><result status="valid" time="0.37"/></proof>
       <proof prover="1"><result status="valid" time="0.13" steps="186658"/></proof>
-      <proof prover="2"><result status="valid" time="0.07" steps="261"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.0.1" expl="postcondition">
-      <proof prover="0"><result status="valid" time="0.36"/></proof>
-      </goal>
-     </transf>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.6.1.1.3" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.3.0" expl="postcondition">
-      <transf name="unfold" arg1="path">
-       <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0" expl="VC for automatonLangConstr">
-       <transf name="split_vc" >
-        <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0.0" expl="VC for automatonLangConstr">
-        <proof prover="0"><result status="valid" time="0.47"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0.1" expl="VC for automatonLangConstr">
-        <proof prover="0"><result status="valid" time="0.43"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0.2" expl="VC for automatonLangConstr">
-        <proof prover="0" timelimit="5"><result status="valid" time="0.42"/></proof>
-        <proof prover="1"><result status="valid" time="0.16" steps="217926"/></proof>
-        <proof prover="2"><result status="valid" time="0.06" steps="36"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0.3" expl="VC for automatonLangConstr">
-        <proof prover="0"><result status="valid" time="0.43"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0.4" expl="VC for automatonLangConstr">
-        <proof prover="0"><result status="valid" time="0.36"/></proof>
-        <proof prover="2" timelimit="1"><result status="valid" time="0.05" steps="34"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.3.0.0.5" expl="VC for automatonLangConstr">
-        <proof prover="0"><result status="valid" time="0.48"/></proof>
-        </goal>
-       </transf>
-       </goal>
-      </transf>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.3.1" expl="postcondition">
-      <proof prover="0" timelimit="5"><result status="valid" time="0.36"/></proof>
-      </goal>
-     </transf>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.6.1.1.2" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.2.0" expl="postcondition">
-      <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="13.21"/></proof>
-      <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="20505072"/></proof>
-      <proof prover="2" timelimit="30" memlimit="4000"><result status="valid" time="0.60" steps="2056"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.2.1" expl="postcondition">
-      <proof prover="0" timelimit="5"><result status="valid" time="0.38"/></proof>
-      </goal>
-     </transf>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.6.1.1.1" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.1.0" expl="postcondition">
-      <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-      <proof prover="1"><result status="highfailure" time="4.26" steps="4623269"/></proof>
-      <proof prover="2"><result status="valid" time="0.79" steps="2567"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.1.1" expl="postcondition">
-      <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-      <proof prover="1"><result status="highfailure" time="4.15" steps="4461701"/></proof>
-      <proof prover="2"><result status="valid" time="0.45" steps="1501"/></proof>
+      <proof prover="2" timelimit="5"><result status="valid" time="0.07" steps="261"/></proof>
       </goal>
      </transf>
      </goal>
@@ -753,7 +659,7 @@
     <transf name="split_vc" proved="true" >
      <goal name="automatonLangConstr&#39;vc.6.2.1.0" expl="postcondition" proved="true">
      <proof prover="0" timelimit="5"><result status="valid" time="0.28"/></proof>
-     <proof prover="2"><result status="valid" time="0.09" steps="333"/></proof>
+     <proof prover="2" timelimit="5"><result status="valid" time="0.09" steps="333"/></proof>
      </goal>
      <goal name="automatonLangConstr&#39;vc.6.2.1.1" expl="postcondition" proved="true">
      <proof prover="0"><result status="valid" time="0.36"/></proof>
@@ -778,173 +684,72 @@
    <goal name="automatonLangConstr&#39;vc.7.0" expl="postcondition" proved="true">
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.7.0.0" expl="postcondition" proved="true">
-    <transf name="split_vc" proved="true" >
-     <goal name="automatonLangConstr&#39;vc.7.0.0.0" expl="postcondition" proved="true">
-     <proof prover="0" timelimit="5"><result status="valid" time="0.24"/></proof>
-     <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1658264"/></proof>
-     <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.6.0.1.3" expl="postcondition">
-     <proof prover="0" timelimit="5" obsolete="true"><result status="valid" time="1.29"/></proof>
-     <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1627315"/></proof>
-     <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.6.0.1.0" expl="postcondition">
-     <proof prover="0" obsolete="true"><result status="valid" time="0.28"/></proof>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.6.0.1.1" expl="postcondition">
-     <proof prover="0" obsolete="true"><result status="valid" time="0.27"/></proof>
-     </goal>
-    </transf>
+    <proof prover="0"><result status="valid" time="0.16"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.7.0.1" expl="postcondition" proved="true">
-    <proof prover="0"><result status="timeout" time="1.00"/></proof>
     <transf name="split_vc" proved="true" >
      <goal name="automatonLangConstr&#39;vc.7.0.1.0" expl="postcondition" proved="true">
-     <proof prover="0" timelimit="5"><result status="valid" time="0.36"/></proof>
-     <proof prover="2"><result status="valid" time="0.16" steps="586"/></proof>
+     <proof prover="0" timelimit="5"><result status="valid" time="0.34"/></proof>
+     <proof prover="2" timelimit="5"><result status="valid" time="0.14" steps="586"/></proof>
      </goal>
      <goal name="automatonLangConstr&#39;vc.7.0.1.1" expl="postcondition" proved="true">
      <transf name="split_vc" proved="true" >
       <goal name="automatonLangConstr&#39;vc.7.0.1.1.0" expl="postcondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.90"/></proof>
+      <proof prover="0" timelimit="5"><result status="valid" time="1.02"/></proof>
       </goal>
       <goal name="automatonLangConstr&#39;vc.7.0.1.1.1" expl="postcondition" proved="true">
-      <proof prover="0" timelimit="5"><result status="valid" time="1.06"/></proof>
+      <proof prover="0" timelimit="5"><result status="valid" time="1.20"/></proof>
       </goal>
      </transf>
      </goal>
      <goal name="automatonLangConstr&#39;vc.7.0.1.2" expl="postcondition" proved="true">
      <transf name="split_vc" proved="true" >
       <goal name="automatonLangConstr&#39;vc.7.0.1.2.0" expl="postcondition" proved="true">
-      <proof prover="0" timelimit="5"><result status="valid" time="1.31"/></proof>
+      <proof prover="0" timelimit="5"><result status="valid" time="1.19"/></proof>
       </goal>
       <goal name="automatonLangConstr&#39;vc.7.0.1.2.1" expl="postcondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.23"/></proof>
+      <proof prover="0"><result status="valid" time="0.28"/></proof>
       </goal>
      </transf>
      </goal>
      <goal name="automatonLangConstr&#39;vc.7.0.1.3" expl="postcondition" proved="true">
-     <proof prover="0"><result status="valid" time="0.23"/></proof>
+     <proof prover="0"><result status="valid" time="0.29"/></proof>
      </goal>
     </transf>
     </goal>
    </transf>
    </goal>
    <goal name="automatonLangConstr&#39;vc.7.1" expl="postcondition" proved="true">
-   <proof prover="0"><result status="valid" time="0.25"/></proof>
-   </goal>
-   <goal name="automatonLangConstr&#39;vc.6.1" expl="postcondition">
-   <transf name="split_vc" >
-    <goal name="automatonLangConstr&#39;vc.6.1.0" expl="postcondition">
-    <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-    <proof prover="2" obsolete="true"><result status="valid" time="1.43" steps="4165"/></proof>
+   <transf name="split_vc" proved="true" >
+    <goal name="automatonLangConstr&#39;vc.7.1.0" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.27"/></proof>
     </goal>
-    <goal name="automatonLangConstr&#39;vc.6.1.1" expl="postcondition">
-    <transf name="split_vc" >
-     <goal name="automatonLangConstr&#39;vc.6.1.1.0" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.0.0" expl="postcondition">
-      <proof prover="0" timelimit="5" obsolete="true"><result status="valid" time="0.30"/></proof>
-      <proof prover="1" obsolete="true"><result status="valid" time="0.12" steps="185042"/></proof>
-      <proof prover="2" obsolete="true"><result status="valid" time="0.07" steps="102"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.0.1" expl="postcondition">
-      <proof prover="0" obsolete="true"><result status="valid" time="0.31"/></proof>
-      </goal>
-     </transf>
+    <goal name="automatonLangConstr&#39;vc.7.1.1" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="automatonLangConstr&#39;vc.7.1.1.0" expl="postcondition" proved="true">
+     <proof prover="0"><result status="valid" time="0.30"/></proof>
      </goal>
-     <goal name="automatonLangConstr&#39;vc.6.1.1.1" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.1.0" expl="postcondition">
-      <proof prover="0" timelimit="5" obsolete="true"><result status="valid" time="0.40"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.1.1" expl="postcondition">
-      <transf name="unfold" arg1="path">
-       <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0" expl="VC for automatonLangConstr">
-       <transf name="split_vc" >
-        <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0.0" expl="VC for automatonLangConstr">
-        <proof prover="0" obsolete="true"><result status="valid" time="0.40"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0.1" expl="VC for automatonLangConstr">
-        <proof prover="0" obsolete="true"><result status="valid" time="0.38"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0.2" expl="VC for automatonLangConstr">
-        <proof prover="0" obsolete="true"><result status="valid" time="0.38"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0.3" expl="VC for automatonLangConstr">
-        <proof prover="0" obsolete="true"><result status="valid" time="0.44"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0.4" expl="VC for automatonLangConstr">
-        <proof prover="0" obsolete="true"><result status="valid" time="0.29"/></proof>
-        <proof prover="2" timelimit="1" obsolete="true"><result status="valid" time="0.05" steps="34"/></proof>
-        </goal>
-        <goal name="automatonLangConstr&#39;vc.6.1.1.1.1.0.5" expl="VC for automatonLangConstr">
-        <proof prover="0" timelimit="5" obsolete="true"><result status="valid" time="0.43"/></proof>
-        <proof prover="1" obsolete="true"><result status="valid" time="0.16" steps="216616"/></proof>
-        <proof prover="2" obsolete="true"><result status="valid" time="0.07" steps="36"/></proof>
-        </goal>
-       </transf>
-       </goal>
-      </transf>
-      </goal>
-     </transf>
+     <goal name="automatonLangConstr&#39;vc.7.1.1.1" expl="postcondition" proved="true">
+     <proof prover="2"><result status="valid" time="0.45" steps="2300"/></proof>
      </goal>
-     <goal name="automatonLangConstr&#39;vc.6.1.1.2" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.2.0" expl="postcondition">
-      <proof prover="0" timelimit="5" obsolete="true"><result status="valid" time="0.37"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.2.1" expl="postcondition">
-      <proof prover="0" timelimit="30" memlimit="4000" obsolete="true"><result status="valid" time="12.15"/></proof>
-      <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="highfailure" time="26.30" steps="16769885"/></proof>
-      <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="valid" time="0.53" steps="2056"/></proof>
-      </goal>
-     </transf>
+     <goal name="automatonLangConstr&#39;vc.7.1.1.2" expl="postcondition" proved="true">
+     <proof prover="0"><result status="valid" time="0.54"/></proof>
      </goal>
-     <goal name="automatonLangConstr&#39;vc.6.1.1.3" expl="postcondition">
-     <transf name="split_vc" >
-      <goal name="automatonLangConstr&#39;vc.6.1.1.3.0" expl="postcondition">
-      <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-      <proof prover="1" obsolete="true"><result status="highfailure" time="4.34" steps="4881064"/></proof>
-      <proof prover="2" obsolete="true"><result status="valid" time="0.67" steps="2567"/></proof>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.6.1.1.3.1" expl="postcondition">
-      <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-      <proof prover="1" obsolete="true"><result status="highfailure" time="4.27" steps="4829771"/></proof>
-      <proof prover="2" obsolete="true"><result status="valid" time="0.48" steps="1501"/></proof>
-      </goal>
-     </transf>
+     <goal name="automatonLangConstr&#39;vc.7.1.1.3" expl="postcondition" proved="true">
+     <proof prover="0"><result status="valid" time="0.31"/></proof>
      </goal>
     </transf>
     </goal>
    </transf>
-   </goal>
-   <goal name="automatonLangConstr&#39;vc.6.2" expl="postcondition">
-   <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-   <proof prover="2" timelimit="1" obsolete="true"><result status="valid" time="1.43" steps="3913"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="automatonLangConstr&#39;vc.8" expl="postcondition" proved="true">
   <transf name="split_vc" proved="true" >
    <goal name="automatonLangConstr&#39;vc.8.0" expl="postcondition" proved="true">
-   <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-   <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="5485634"/></proof>
-   <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.8.0.0" expl="postcondition" proved="true">
     <proof prover="0" timelimit="5"><result status="valid" time="0.35"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.8.1.3" expl="postcondition">
-    <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-    <proof prover="2"><result status="valid" time="0.10" steps="32"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.8.1.2" expl="postcondition">
-    <proof prover="0" timelimit="5"><result status="valid" time="1.67"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.8.1.1" expl="postcondition">
-    <proof prover="0" timelimit="5"><result status="valid" time="3.41"/></proof>
     </goal>
    </transf>
    </goal>
@@ -954,11 +759,10 @@
     <proof prover="0" timelimit="5"><result status="valid" time="0.33"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.8.1.1" expl="postcondition" proved="true">
-    <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-    <proof prover="2"><result status="valid" time="0.16" steps="208"/></proof>
+    <proof prover="2" timelimit="5"><result status="valid" time="0.16" steps="208"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.8.1.2" expl="postcondition" proved="true">
-    <proof prover="0" timelimit="5"><result status="valid" time="1.56"/></proof>
+    <proof prover="0" timelimit="5"><result status="valid" time="0.52"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.8.1.3" expl="postcondition" proved="true">
     <proof prover="0" timelimit="5"><result status="valid" time="0.35"/></proof>
@@ -972,31 +776,20 @@
    <goal name="automatonLangConstr&#39;vc.9.0" expl="postcondition" proved="true">
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.9.0.0" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.45"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.9.1.1" expl="postcondition">
-    <proof prover="0" timelimit="5"><result status="valid" time="2.89"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.9.1.2" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.87"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.9.1.3" expl="postcondition">
-    <proof prover="2" timelimit="1"><result status="valid" time="0.05" steps="32"/></proof>
+    <proof prover="0"><result status="valid" time="0.28"/></proof>
     </goal>
    </transf>
    </goal>
    <goal name="automatonLangConstr&#39;vc.9.1" expl="postcondition" proved="true">
-   <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.9.1.0" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.46"/></proof>
+    <proof prover="0"><result status="valid" time="0.27"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.9.1.1" expl="postcondition" proved="true">
-    <proof prover="0" timelimit="5"><result status="valid" time="4.06"/></proof>
+    <proof prover="0" timelimit="5"><result status="valid" time="0.31"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.9.1.2" expl="postcondition" proved="true">
-    <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-    <proof prover="2" timelimit="1"><result status="valid" time="0.13" steps="532"/></proof>
+    <proof prover="2"><result status="valid" time="0.13" steps="31"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.9.1.3" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.30"/></proof>
@@ -1012,264 +805,6 @@
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.10.0.0" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.51"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.10.1.3" expl="postcondition">
-    <proof prover="0"><result status="valid" time="0.24"/></proof>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.10.1.1" expl="postcondition">
-    <transf name="split_vc" >
-     <goal name="automatonLangConstr&#39;vc.10.1.1.0" expl="postcondition">
-     <transf name="destruct_term" arg1="w">
-      <goal name="automatonLangConstr&#39;vc.10.1.1.0.0" expl="postcondition">
-      <transf name="instantiate" arg1="sigma_ext&#39;spec" arg2="(to_fset3 (alphabet a))">
-       <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0" expl="postcondition">
-       <transf name="destruct" arg1="Hinst">
-        <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0" expl="postcondition">
-        <transf name="instantiate" arg1="Hinst" arg2="w">
-         <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0.0" expl="postcondition">
-         <transf name="destruct" arg1="Hinst">
-          <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0.0.0" expl="destruct premise">
-          <proof prover="0"><result status="valid" time="0.12"/></proof>
-          </goal>
-          <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0.0.1" expl="postcondition">
-          <transf name="instantiate" arg1="Hinst" arg2="x1">
-           <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0.0.1.0" expl="postcondition">
-           <proof prover="0"><result status="timeout" time="1.00"/></proof>
-           <proof prover="2" timelimit="1"><result status="valid" time="0.41" steps="1923"/></proof>
-           </goal>
-          </transf>
-          </goal>
-         </transf>
-         </goal>
-        </transf>
-        </goal>
-       </transf>
-       </goal>
-      </transf>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.10.1.1.0.1" expl="postcondition">
-      <proof prover="0"><result status="valid" time="0.11"/></proof>
-      </goal>
-     </transf>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.10.1.1.1" expl="postcondition">
-     <transf name="destruct_term" arg1="w">
-      <goal name="automatonLangConstr&#39;vc.10.1.1.1.0" expl="postcondition">
-      <transf name="instantiate" arg1="sigma_ext&#39;spec" arg2="(to_fset3 (alphabet a))">
-       <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0" expl="postcondition">
-       <transf name="destruct" arg1="Hinst">
-        <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0" expl="postcondition">
-        <transf name="instantiate" arg1="Hinst" arg2="w">
-         <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0" expl="postcondition">
-         <transf name="destruct" arg1="Hinst">
-          <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.0" expl="destruct premise">
-          <proof prover="0"><result status="valid" time="0.16"/></proof>
-          </goal>
-          <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1" expl="postcondition">
-          <transf name="instantiate" arg1="Hinst" arg2="x1">
-           <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0" expl="postcondition">
-           <transf name="destruct" arg1="Hinst">
-            <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.0" expl="destruct premise">
-            <proof prover="0"><result status="valid" time="0.17"/></proof>
-            </goal>
-            <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1" expl="postcondition">
-            <transf name="assert" arg1="( x1 = x3)">
-             <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.0" expl="asserted formula">
-             </goal>
-             <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1" expl="postcondition">
-             <proof prover="0"><result status="valid" time="0.44"/></proof>
-             </goal>
-            </transf>
-            <transf name="assert" arg1="( x1 = eps \/ x1 = x3)">
-             <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.0" expl="asserted formula">
-             <proof prover="0"><result status="timeout" time="1.00"/></proof>
-             <proof prover="2" timelimit="1"><result status="valid" time="0.33" steps="1479"/></proof>
-             </goal>
-             <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1" expl="postcondition">
-             <transf name="destruct" arg1="h">
-              <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0" expl="postcondition">
-              <transf name="assert" arg1="(x1 = eps -&gt; inter (delta_ext (start a) w a) (to_fset1 (finalStates a))
-= (empty: fset int) )">
-               <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0" expl="asserted formula">
-               <transf name="split_vc" >
-                <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0" expl="asserted formula">
-                <transf name="instantiate" arg1="delta_ext&#39;def" arg2="(start a)">
-                 <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0" expl="asserted formula">
-                 <transf name="instantiate" arg1="Hinst" arg2="w">
-                  <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0" expl="asserted formula">
-                  <transf name="instantiate" arg1="Hinst" arg2="a">
-                   <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0" expl="asserted formula">
-                   <transf name="destruct" arg1="Hinst">
-                    <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.0" expl="destruct premise">
-                    <proof prover="0"><result status="valid" time="0.25"/></proof>
-                    </goal>
-                    <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1" expl="asserted formula">
-                    <transf name="destruct" arg1="Hinst">
-                     <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.0" expl="destruct premise">
-                     <proof prover="0"><result status="valid" time="0.19"/></proof>
-                     </goal>
-                     <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1" expl="asserted formula">
-                     <transf name="destruct" arg1="Hinst">
-                      <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.0" expl="destruct premise">
-                      <proof prover="0"><result status="valid" time="0.18"/></proof>
-                      </goal>
-                      <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1" expl="asserted formula">
-                      <transf name="destruct" arg1="Hinst">
-                       <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.0" expl="asserted formula">
-                       <proof prover="0"><result status="valid" time="0.11"/></proof>
-                       </goal>
-                       <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1" expl="asserted formula">
-                       <proof prover="2"><result status="timeout" time="5.00"/></proof>
-                       <transf name="destruct" arg1="Hinst">
-                        <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0" expl="asserted formula">
-                        <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-                        <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="22709513"/></proof>
-                        <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-                        <transf name="assert" arg1="(eclose (add (start a) (empty: fset int)) a = singleton (start a))">
-                         <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0" expl="asserted formula">
-                         <transf name="instantiate" arg1="eclose&#39;def" arg2="(add (start a) (empty: fset int))">
-                          <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0" expl="asserted formula">
-                          <transf name="instantiate" arg1="Hinst" arg2="a">
-                           <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0" expl="asserted formula">
-                           <transf name="destruct" arg1="Hinst">
-                            <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.0" expl="destruct premise">
-                            <proof prover="0"><result status="valid" time="0.32"/></proof>
-                            </goal>
-                            <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1" expl="asserted formula">
-                            <transf name="destruct" arg1="Hinst">
-                             <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.0" expl="asserted formula">
-                             <proof prover="0"><result status="valid" time="0.11"/></proof>
-                             </goal>
-                             <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1" expl="asserted formula">
-                             <transf name="assert" arg1="(fold_next_states (add (start a) (empty: fset int)) a = singleton (start a))">
-                              <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0" expl="asserted formula">
-                              <transf name="instantiate" arg1="fold_next_states&#39;def" arg2="(add (start a) (empty: fset int))">
-                               <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0" expl="asserted formula">
-                               <transf name="instantiate" arg1="Hinst" arg2="a">
-                                <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0" expl="asserted formula">
-                                <transf name="destruct" arg1="Hinst">
-                                 <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.0" expl="destruct premise">
-                                 <proof prover="0"><result status="valid" time="0.31"/></proof>
-                                 </goal>
-                                 <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1" expl="asserted formula">
-                                 <transf name="destruct" arg1="Hinst">
-                                  <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1.0" expl="asserted formula">
-                                  <proof prover="0"><result status="valid" time="0.17"/></proof>
-                                  </goal>
-                                  <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1.1" expl="asserted formula">
-                                  <transf name="eliminate_let_fmla" >
-                                   <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1.1.0" expl="asserted formula">
-                                   <transf name="instantiate" arg1="delta&#39;def" arg2="(start a)">
-                                    <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1.1.0.0" expl="asserted formula">
-                                    <transf name="instantiate" arg1="Hinst" arg2="eps">
-                                     <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1.1.0.0.0" expl="asserted formula">
-                                     <transf name="instantiate" arg1="Hinst" arg2="a">
-                                      <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.0.0.0.1.1.0.0.0.0" expl="asserted formula">
-                                      <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-                                      <proof prover="1"><result status="timeout" time="5.00" steps="6752378"/></proof>
-                                      <proof prover="2"><result status="timeout" time="5.00"/></proof>
-                                      </goal>
-                                     </transf>
-                                     </goal>
-                                    </transf>
-                                    </goal>
-                                   </transf>
-                                   </goal>
-                                  </transf>
-                                  </goal>
-                                 </transf>
-                                 </goal>
-                                </transf>
-                                </goal>
-                               </transf>
-                               </goal>
-                              </transf>
-                              </goal>
-                              <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.0.0.0.1.1.1" expl="asserted formula">
-                              <proof prover="0"><result status="valid" time="0.20"/></proof>
-                              </goal>
-                             </transf>
-                             </goal>
-                            </transf>
-                            </goal>
-                           </transf>
-                           </goal>
-                          </transf>
-                          </goal>
-                         </transf>
-                         </goal>
-                         <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.0.1" expl="asserted formula">
-                         <proof prover="0"><result status="valid" time="0.54"/></proof>
-                         </goal>
-                        </transf>
-                        </goal>
-                        <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.1.1" expl="asserted formula">
-                        <proof prover="0"><result status="valid" time="0.25"/></proof>
-                        </goal>
-                       </transf>
-                       </goal>
-                       <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.0.0.0.0.0.1.1.1.2" expl="asserted formula">
-                       <proof prover="0" timelimit="5"><result status="valid" time="4.53"/></proof>
-                       <proof prover="1" timelimit="1"><result status="timeout" time="1.00" steps="1567914"/></proof>
-                       <proof prover="2" timelimit="1"><result status="timeout" time="1.00"/></proof>
-                       </goal>
-                      </transf>
-                      </goal>
-                     </transf>
-                     </goal>
-                    </transf>
-                    </goal>
-                   </transf>
-                   </goal>
-                  </transf>
-                  </goal>
-                 </transf>
-                 </goal>
-                </transf>
-                </goal>
-               </transf>
-               </goal>
-               <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.0.1" expl="postcondition">
-               <proof prover="0"><result status="valid" time="0.11"/></proof>
-               </goal>
-              </transf>
-              </goal>
-              <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.1.1" expl="postcondition">
-              <proof prover="0"><result status="valid" time="0.41"/></proof>
-              </goal>
-             </transf>
-             </goal>
-            </transf>
-            </goal>
-           </transf>
-           </goal>
-          </transf>
-          </goal>
-         </transf>
-         </goal>
-        </transf>
-        </goal>
-       </transf>
-       </goal>
-      </transf>
-      </goal>
-      <goal name="automatonLangConstr&#39;vc.10.1.1.1.1" expl="postcondition">
-      <proof prover="0"><result status="valid" time="0.15"/></proof>
-      </goal>
-     </transf>
-     </goal>
-    </transf>
-    </goal>
-    <goal name="automatonLangConstr&#39;vc.10.1.2" expl="postcondition">
-    <proof prover="0"><result status="timeout" time="1.00"/></proof>
-    <transf name="split_vc" >
-     <goal name="automatonLangConstr&#39;vc.10.1.2.0" expl="postcondition">
-     <proof prover="1"><result status="timeout" time="5.00" steps="6293918"/></proof>
-     </goal>
-     <goal name="automatonLangConstr&#39;vc.10.1.2.1" expl="postcondition">
-     <proof prover="0" timelimit="5"><result status="valid" time="1.35"/></proof>
-     </goal>
-    </transf>
     </goal>
    </transf>
    </goal>
@@ -1296,8 +831,7 @@
           <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0.0.1" expl="postcondition" proved="true">
           <transf name="instantiate" proved="true" arg1="Hinst" arg2="x1">
            <goal name="automatonLangConstr&#39;vc.10.1.1.0.0.0.0.0.1.0" expl="postcondition" proved="true">
-           <proof prover="0"><result status="timeout" time="1.00"/></proof>
-           <proof prover="2" timelimit="1"><result status="valid" time="0.70" steps="2053"/></proof>
+           <proof prover="2"><result status="valid" time="0.70" steps="2050"/></proof>
            </goal>
           </transf>
           </goal>
@@ -1361,14 +895,10 @@
                    <proof prover="0"><result status="valid" time="0.18"/></proof>
                    </goal>
                    <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.0.0.0.1.1.1.1" expl="postcondition" proved="true">
-                   <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-                   <proof prover="1" timelimit="1"><result status="timeout" time="1.00" steps="1572863"/></proof>
-                   <proof prover="2"><result status="valid" time="4.10" steps="13063"/></proof>
+                   <proof prover="2" timelimit="5"><result status="valid" time="3.04" steps="9020"/></proof>
                    </goal>
                    <goal name="automatonLangConstr&#39;vc.10.1.1.1.0.0.0.0.1.0.1.0.0.0.1.1.1.2" expl="postcondition" proved="true">
-                   <proof prover="0" timelimit="5"><result status="valid" time="4.71"/></proof>
-                   <proof prover="1" timelimit="1"><result status="timeout" time="1.00" steps="2004743"/></proof>
-                   <proof prover="2"><result status="timeout" time="5.00"/></proof>
+                   <proof prover="0" timelimit="5"><result status="valid" time="7.38"/></proof>
                    </goal>
                   </transf>
                   </goal>
@@ -1452,14 +982,10 @@
                    <proof prover="0"><result status="valid" time="0.19"/></proof>
                    </goal>
                    <goal name="automatonLangConstr&#39;vc.10.1.2.0.0.0.0.0.1.0.1.0.0.0.1.1.1.1" expl="postcondition" proved="true">
-                   <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="11.34"/></proof>
-                   <proof prover="1" memlimit="2000"><result status="highfailure" time="4.13" steps="6342864"/></proof>
-                   <proof prover="2" memlimit="2000"><result status="timeout" time="5.00"/></proof>
+                   <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="17.57"/></proof>
                    </goal>
                    <goal name="automatonLangConstr&#39;vc.10.1.2.0.0.0.0.0.1.0.1.0.0.0.1.1.1.2" expl="postcondition" proved="true">
-                   <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="9.48"/></proof>
-                   <proof prover="1" memlimit="2000"><result status="timeout" time="5.00" steps="7373935"/></proof>
-                   <proof prover="2" memlimit="2000"><result status="timeout" time="5.00"/></proof>
+                   <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="13.47"/></proof>
                    </goal>
                   </transf>
                   </goal>
@@ -1493,8 +1019,7 @@
      </transf>
      </goal>
      <goal name="automatonLangConstr&#39;vc.10.1.2.1" expl="postcondition" proved="true">
-     <proof prover="0"><result status="timeout" time="1.00"/></proof>
-     <proof prover="2" timelimit="1"><result status="valid" time="0.41" steps="1249"/></proof>
+     <proof prover="2"><result status="valid" time="0.41" steps="1249"/></proof>
      </goal>
     </transf>
     </goal>
@@ -1508,20 +1033,18 @@
   <goal name="automatonLangConstr&#39;vc.11" expl="postcondition" proved="true">
   <transf name="split_vc" proved="true" >
    <goal name="automatonLangConstr&#39;vc.11.0" expl="postcondition" proved="true">
-   <proof prover="0"><result status="valid" time="0.65"/></proof>
+   <proof prover="0"><result status="valid" time="0.43"/></proof>
    </goal>
    <goal name="automatonLangConstr&#39;vc.11.1" expl="postcondition" proved="true">
    <transf name="split_vc" proved="true" >
     <goal name="automatonLangConstr&#39;vc.11.1.0" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.61"/></proof>
+    <proof prover="0"><result status="valid" time="0.40"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.11.1.1" expl="postcondition" proved="true">
-    <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-    <proof prover="2"><result status="valid" time="2.90" steps="9869"/></proof>
+    <proof prover="2" timelimit="5"><result status="valid" time="2.90" steps="10213"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.11.1.2" expl="postcondition" proved="true">
-    <proof prover="0"><result status="timeout" time="1.00"/></proof>
-    <proof prover="2" timelimit="1"><result status="valid" time="0.71" steps="1828"/></proof>
+    <proof prover="2"><result status="valid" time="0.46" steps="1828"/></proof>
     </goal>
     <goal name="automatonLangConstr&#39;vc.11.1.3" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.42"/></proof>
@@ -1538,78 +1061,13 @@
  <goal name="automatonLang&#39;vc" expl="VC for automatonLang" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="automatonLang&#39;vc.0" expl="postcondition" proved="true">
-  <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-  <proof prover="1"><result status="valid" time="0.14" steps="200004"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  <proof prover="0" timelimit="5"><result status="valid" time="0.57"/></proof>
   </goal>
   <goal name="automatonLang&#39;vc.1" expl="postcondition" proved="true">
-  <proof prover="0" timelimit="5"><result status="valid" time="0.89"/></proof>
-  <proof prover="1" obsolete="true"><result status="highfailure" time="4.03" steps="4960667"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
-  <transf name="assert" arg1="( forall w. mem1 w result -&gt; (mem1 w (sigma_ext (to_fset3 (alphabet a))) /\ (accepted_words a w) ) )">
-   <goal name="automatonLang&#39;vc.1.0" expl="asserted formula">
-   <proof prover="0" obsolete="true"><result status="valid" time="0.34"/></proof>
-   </goal>
-   <goal name="automatonLang&#39;vc.1.1" expl="postcondition">
-   <transf name="instantiate" arg1="h" arg2="w">
-    <goal name="automatonLang&#39;vc.1.1.0" expl="postcondition">
-    <transf name="destruct" arg1="Hinst">
-     <goal name="automatonLang&#39;vc.1.1.0.0" expl="destruct premise">
-     <proof prover="0" obsolete="true"><result status="valid" time="0.14"/></proof>
-     </goal>
-     <goal name="automatonLang&#39;vc.1.1.0.1" expl="postcondition">
-     <transf name="destruct" arg1="Hinst">
-      <goal name="automatonLang&#39;vc.1.1.0.1.0" expl="postcondition">
-      <transf name="unfold" arg1="accepted_words" arg2="in" arg3="Hinst">
-       <goal name="automatonLang&#39;vc.1.1.0.1.0.0" expl="postcondition">
-       <transf name="eliminate_let_fmla" >
-        <goal name="automatonLang&#39;vc.1.1.0.1.0.0.0" expl="postcondition">
-        <transf name="destruct" arg1="Hinst">
-         <goal name="automatonLang&#39;vc.1.1.0.1.0.0.0.0" expl="destruct premise">
-         <proof prover="0" obsolete="true"><result status="valid" time="0.35"/></proof>
-         </goal>
-         <goal name="automatonLang&#39;vc.1.1.0.1.0.0.0.1" expl="postcondition">
-         </goal>
-        </transf>
-        </goal>
-       </transf>
-       </goal>
-      </transf>
-      </goal>
-     </transf>
-     </goal>
-    </transf>
-    </goal>
-   </transf>
-   </goal>
-  </transf>
+  <proof prover="0" timelimit="5"><result status="valid" time="1.27"/></proof>
   </goal>
   <goal name="automatonLang&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.61"/></proof>
-  <transf name="assert" arg1="(mem1 w (sigma_ext (to_fset3 (alphabet a))))">
-   <goal name="automatonLang&#39;vc.2.0" expl="asserted formula">
-   <proof prover="0" obsolete="true"><result status="valid" time="0.37"/></proof>
-   <transf name="assert" arg1="( length w &lt; 2 -&gt; mem1 w (sigma_ext (to_fset3 (alphabet a))) )">
-    <goal name="automatonLang&#39;vc.2.0.0" expl="asserted formula">
-    </goal>
-    <goal name="automatonLang&#39;vc.2.0.1" expl="asserted formula">
-    <proof prover="0" obsolete="true"><result status="valid" time="0.45"/></proof>
-    </goal>
-   </transf>
-   <transf name="assert" arg1="(forall z. mem1 z (sigma_ext (to_fset3 (alphabet a))) -&gt; exists x. z = Cons x (Nil:list char) )">
-    <goal name="automatonLang&#39;vc.2.0.0" expl="asserted formula">
-    <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-    <proof prover="1" timelimit="1" obsolete="true"><result status="highfailure" time="0.77" steps="1885739"/></proof>
-    <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
-    </goal>
-    <goal name="automatonLang&#39;vc.2.0.1" expl="asserted formula">
-    </goal>
-   </transf>
-   </goal>
-   <goal name="automatonLang&#39;vc.2.1" expl="postcondition">
-   <proof prover="0" obsolete="true"><result status="valid" time="0.62"/></proof>
-   </goal>
-  </transf>
+  <proof prover="0" timelimit="5"><result status="valid" time="1.84"/></proof>
   </goal>
  </transf>
  </goal>
@@ -1635,14 +1093,12 @@
   </goal>
   <goal name="compile&#39;vc.6" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.10"/></proof>
-  <proof prover="1" obsolete="true"><result status="highfailure" time="3.99" steps="5149830"/></proof>
-  <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
   </goal>
   <goal name="compile&#39;vc.7" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.11"/></proof>
   </goal>
   <goal name="compile&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0" timelimit="5"><result status="valid" time="0.18"/></proof>
+  <proof prover="0"><result status="valid" time="0.21"/></proof>
   </goal>
   <goal name="compile&#39;vc.9" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.11"/></proof>
@@ -1651,12 +1107,10 @@
   <proof prover="0"><result status="valid" time="0.10"/></proof>
   </goal>
   <goal name="compile&#39;vc.11" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.38"/></proof>
+  <proof prover="0" timelimit="5"><result status="valid" time="0.39"/></proof>
   </goal>
   <goal name="compile&#39;vc.12" expl="postcondition" proved="true">
-  <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="1" memlimit="2000" obsolete="true"><result status="timeout" time="5.00" steps="7909808"/></proof>
-  <proof prover="2" timelimit="1"><result status="valid" time="0.20" steps="401"/></proof>
+  <proof prover="2"><result status="valid" time="0.20" steps="401"/></proof>
   </goal>
   <goal name="compile&#39;vc.13" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.49"/></proof>
@@ -1668,7 +1122,7 @@
   <proof prover="0" timelimit="5"><result status="valid" time="0.38"/></proof>
   </goal>
   <goal name="compile&#39;vc.16" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.54"/></proof>
+  <proof prover="0"><result status="valid" time="0.64"/></proof>
   </goal>
   <goal name="compile&#39;vc.17" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.47"/></proof>
@@ -1692,7 +1146,7 @@
        <goal name="compile&#39;vc.19.1.0.0.0.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Nil: list char)">
         <goal name="compile&#39;vc.19.1.0.0.0.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.31"/></proof>
+        <proof prover="0"><result status="valid" time="0.27"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1703,7 +1157,7 @@
        <goal name="compile&#39;vc.19.1.0.0.1.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Nil: list char)">
         <goal name="compile&#39;vc.19.1.0.0.1.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.75"/></proof>
+        <proof prover="0"><result status="valid" time="0.70"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1722,7 +1176,7 @@
        <goal name="compile&#39;vc.19.1.1.0.0.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Nil: list char)">
         <goal name="compile&#39;vc.19.1.1.0.0.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.43"/></proof>
+        <proof prover="0"><result status="valid" time="0.31"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1733,7 +1187,7 @@
        <goal name="compile&#39;vc.19.1.1.0.1.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Nil: list char)">
         <goal name="compile&#39;vc.19.1.1.0.1.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.54"/></proof>
+        <proof prover="0"><result status="valid" time="0.49"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1751,7 +1205,7 @@
   <proof prover="0"><result status="valid" time="0.36"/></proof>
   </goal>
   <goal name="compile&#39;vc.21" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.98"/></proof>
+  <proof prover="0"><result status="valid" time="0.93"/></proof>
   </goal>
   <goal name="compile&#39;vc.22" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.42"/></proof>
@@ -1760,7 +1214,7 @@
   <proof prover="0"><result status="valid" time="0.26"/></proof>
   </goal>
   <goal name="compile&#39;vc.24" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.42"/></proof>
+  <proof prover="0"><result status="valid" time="0.38"/></proof>
   </goal>
   <goal name="compile&#39;vc.25" expl="postcondition" proved="true">
   <transf name="unfold" proved="true" arg1="regexLang">
@@ -1787,7 +1241,7 @@
   <proof prover="0" timelimit="5"><result status="valid" time="0.51"/></proof>
   </goal>
   <goal name="compile&#39;vc.29" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.64"/></proof>
+  <proof prover="0"><result status="valid" time="0.54"/></proof>
   </goal>
   <goal name="compile&#39;vc.30" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.49"/></proof>
@@ -1811,7 +1265,7 @@
        <goal name="compile&#39;vc.32.1.0.0.0.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Nil:list char)">
         <goal name="compile&#39;vc.32.1.0.0.0.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.19"/></proof>
+        <proof prover="0"><result status="valid" time="0.20"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1822,10 +1276,9 @@
        <goal name="compile&#39;vc.32.1.0.0.1.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Cons x (Nil:list char))">
         <goal name="compile&#39;vc.32.1.0.0.1.0.0" proved="true">
-        <proof prover="0"><result status="timeout" time="1.00"/></proof>
         <transf name="exists" proved="true" arg1="final">
          <goal name="compile&#39;vc.32.1.0.0.1.0.0.0" proved="true">
-         <proof prover="0"><result status="valid" time="0.86"/></proof>
+         <proof prover="0"><result status="valid" time="0.52"/></proof>
          </goal>
         </transf>
         </goal>
@@ -1846,7 +1299,7 @@
        <goal name="compile&#39;vc.32.1.1.0.0.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Cons x (Nil:list char))">
         <goal name="compile&#39;vc.32.1.1.0.0.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.45"/></proof>
+        <proof prover="0"><result status="valid" time="0.46"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1857,7 +1310,7 @@
        <goal name="compile&#39;vc.32.1.1.0.1.0" expl="VC for compile" proved="true">
        <transf name="exists" proved="true" arg1="(Nil:list char)">
         <goal name="compile&#39;vc.32.1.1.0.1.0.0" proved="true">
-        <proof prover="0"><result status="valid" time="0.32"/></proof>
+        <proof prover="0"><result status="valid" time="0.40"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1875,7 +1328,7 @@
   <proof prover="0"><result status="valid" time="0.36"/></proof>
   </goal>
   <goal name="compile&#39;vc.34" expl="postcondition" proved="true">
-  <proof prover="0" timelimit="5"><result status="valid" time="0.74"/></proof>
+  <proof prover="0" timelimit="5"><result status="valid" time="1.00"/></proof>
   </goal>
   <goal name="compile&#39;vc.35" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.44"/></proof>
