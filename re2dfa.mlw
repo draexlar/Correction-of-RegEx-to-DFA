@@ -87,10 +87,9 @@ module NFA
   use BasicTypes, RegEx, ref.Ref, RevListProp
   use import list.Mem as LM
   use import list.Reverse as LR
-  use list.HdTlNoOpt
+  use list.List, list.Length, list.Append, list.HdTlNoOpt
   use int.Int
   use set.Fset
-  use list.List, list.Length, list.Append
  
   val constant start_const: state
 
@@ -469,6 +468,129 @@ module NFA
   end
   
   
+  (* não consegue provar terminacao 
+  predicate wf_visited (v: fset state) (s: state) (a: automaton)
+  =
+    subset v a.states /\ mem s a.states /\ not mem s v ->
+      forall q:state. mem q v -> ( mem (q, eps, s) a.transitions \/ wf_visited (remove q v) q a )*)
+      
+  (*predicate pathV int int (list state) automaton
+  
+  axiom def_pathV: forall i j: int, v: list state, a: automaton. 
+    pathV i j v a <->
+      ( subset (elements v) a.states /\ 0 <= i < j < length v ->
+        ( j = i+1 /\ mem ((nth j v), eps, (nth i v)) a.transitions ) \/ 
+          ( mem ((nth (i+1) v), eps, (nth i v)) a.transitions /\ pathV (i+1) j v a ) )*)
+      
+  (*let rec ghost function wf_visited (v: list state) (s: state) (a: automaton) : bool
+    requires { subset (elements v) a.states /\ mem s a.states }
+    variant  { length v }
+    ensures  { result = true -> ( forall i j. 0 <= i < j < length v -> pathV i j v a ) }
+  =
+    let t = BasicTypes.ST.to_fset a.transitions in
+    match v with
+    | Nil -> true
+    | Cons q tl -> mem (q, eps, s) t && wf_visited tl q a
+    end
+    
+    if is_empty v then true
+    else let t = BasicTypes.ST.to_fset a.transitions in
+         let q = pick v in
+           ( mem (q, eps, s) t || wf_visited (remove q v) s a ) && wf_visited (remove q v) q a *)
+  
+  use seq.Seq
+  use seq.ToFset
+           
+  let rec ghost predicate wf_visited (v: seq state) (s: state) (a: automaton)
+    requires { subset (to_set v) a.states /\ mem s a.states }
+    variant  { length v }
+  =
+     let t = BasicTypes.ST.to_fset a.transitions in
+     if v == empty then true
+     else let q = v[length v-1] in mem (q, eps, s) t && wf_visited v[..length v-1] q a
+   
+  (* lemma lemma_path_visited:
+    forall v:list state, s:state, a:automaton, i j:int.
+      mem s a.states /\ subset (elements v) a.states /\ wf_visited v s a /\ 0 <= i < j < length v -> pathV i j v a *) 
+           
+  lemma lemma_subset_wf_visited:
+    forall a:automaton, s q:state, v:seq state.
+      mem s a.states /\ mem q a.states /\ subset (to_set v) a.states /\ 
+        mem (q, eps, s) a.transitions /\ wf_visited v q a -> wf_visited (snoc v q) s a
+        
+  let rec ghost predicate path_on_seq (v: seq state) (a: automaton)
+    requires { subset (to_set v) a.states }
+    variant  { length v }
+    ensures  { forall i. result /\ length v > 1 /\ 0 <= i /\ i+1 < length v -> mem (v[i], eps, v[i+1]) a.transitions }
+    ensures  { forall i. length v > 1 /\ 0 <= i /\ i+1 < length v /\ mem (v[i], eps, v[i+1]) a.transitions -> result }
+  =
+    let t = BasicTypes.ST.to_fset a.transitions in
+    if v == empty then true
+    else if length v = 1 then true
+    else let s = v[0] in 
+         let q = v[1] in 
+         mem (s, eps, q) t && path_on_seq v[1..] a
+         
+  lemma lemma_sub_path_seq:
+    forall a:automaton, q:state, v:seq state.
+      mem q a.states /\ subset (to_set v) a.states /\ length v > 0 /\
+        mem (v[length v - 1], eps, q) a.transitions /\ path_on_seq v a -> path_on_seq (snoc v q) a
+  
+  use import seq.Mem as SM
+  use import set.Fset as FS
+  
+  let rec ghost function eclose_n (visited: seq state) (q: state) (a: automaton) : fset state
+    requires { mem q a.states } 
+    requires { subset (to_set visited) a.states }
+    requires { wf_visited visited q a }
+    requires { path_on_seq visited a }
+    variant  { cardinal a.states - length visited }
+    ensures  { subset result a.states }
+    ensures  { mem q result }
+    ensures  { subset (to_set visited) result }
+    ensures  { forall f. mem f result -> SM.mem f visited \/ f = q \/ (not SM.mem f visited /\ (exists i. mem i result /\ mem (i, eps, f) a.transitions)) }
+    ensures  { forall f. (not SM.mem q visited /\ mem (q, eps, f) a.transitions) -> mem f result }
+    ensures  { forall f. f <> q /\ mem f result -> exists s. mem (s, eps, f) a.transitions }
+    (*ensures  { forall i, f. (not mem q visited /\ mem (q, eps, i) a.transitions /\ mem i result /\ mem (i, eps, f) a.transitions) -> mem f result }*)
+    (*ensures  { (not exists f, c. mem f ss /\ mem (f, eps, c) a.transitions) -> result = visited }*)
+    =
+      if not SM.mem q visited then 
+         begin
+           let ns = (delta q eps a) in
+           fold_eclose (snoc visited q) ns a
+         end
+      else to_set visited
+  with ghost function fold_eclose (visited: seq state) (ns: fset state) (a: automaton) : fset state 
+    requires { subset ns a.states }
+    requires { subset (to_set visited) a.states }
+    requires { forall s. mem s ns -> wf_visited visited s a }
+    requires { path_on_seq visited a }
+    variant  { cardinal ns }
+    ensures  { subset result a.states }
+    ensures  { subset ns result }
+    ensures  { subset (to_set visited) result }
+    ensures  { forall f. mem f result -> SM.mem f visited \/ mem f ns \/ (exists i. mem i result /\ mem (i, eps, f) a.transitions) }
+    ensures  { forall i, f. (not SM.mem i visited /\ mem i ns /\ mem (i, eps, f) a.transitions) -> mem f result } (* not mem i visited *)
+    (*ensures  { (not exists f, c. mem f ss /\ mem (f, eps, c) a.transitions) -> result = ns }*)
+  =
+    if is_empty ns then to_set visited
+    else let q = pick ns in
+         union (eclose_n visited q a) (fold_eclose visited (remove q ns) a)
+         
+  (*lemma lemma_filter_eclose_n:
+    forall a:automaton, s:state, v:fset state.
+      mem s a.states /\ subset v a.states /\ not mem s v  -> subset (eclose_n empty s a) (eclose_n v s a)
+               
+  lemma lemma_subset_eclose_n:
+    forall a:automaton, s q:state, v1 v2:fset state. let ecl = (eclose_n v1 s a) in 
+      mem s a.states /\ subset v1 a.states /\ subset v2 a.states /\ subset v1 v2 /\ not mem s v1 /\ not mem q v1 /\ not mem q v2 /\ mem q ecl 
+        -> subset (eclose_n v2 q a) ecl*)
+        
+  lemma lemma_sub_eclose_n:
+    forall a: automaton, s x:state, v:seq state.
+      mem s a.states /\ subset (to_set v) a.states /\ not SM.mem s v /\ (wf_visited v s a) /\
+        mem x (eclose_n Seq.empty s a) -> mem x (eclose_n v s a)
+  
   let ghost function eclose_df (s: state) (a: automaton) : fset state 
     requires { mem s a.states }
     ensures  { subset result a.states }
@@ -478,43 +600,12 @@ module NFA
     ensures  { is_empty a.transitions -> result = singleton s }
     (*ensures  { forall q. mem q result -> subset (eclose_n empty q) result }*)
   =
-    if ST.is_empty a.transitions then singleton s
-    else
-      begin
-        let rec function eclose_n (visited: fset state) (q: state) : fset state
-          requires { mem q a.states } 
-          requires { subset visited a.states }
-          variant  { cardinal a.states - cardinal visited }
-          ensures  { subset result a.states }
-          ensures  { mem q result }
-          ensures  { subset visited result }
-          ensures  { forall f. mem f result -> mem f visited \/ f = q \/ (not mem f visited /\ (exists i. mem i result /\ mem (i, eps, f) a.transitions)) }
-          ensures  { forall f. (not mem q visited /\ mem (q, eps, f) a.transitions) -> mem f result }
-          (*ensures  { forall i, f. (not mem q visited /\ mem (q, eps, i) a.transitions /\ mem i result /\ mem (i, eps, f) a.transitions) -> mem f result }*)
-          (*ensures  { (not exists f, c. mem f ss /\ mem (f, eps, c) a.transitions) -> result = visited }*)
-        =
-          if not mem q visited then 
-            begin
-              let ns = (delta q eps a) in
-              fold_eclose (add q visited) ns
-            end
-          else visited
-        with function fold_eclose (visited: fset state) (ns: fset state) : fset state 
-          requires { subset ns a.states }
-          requires { subset visited a.states}
-          variant  { cardinal ns }
-          ensures  { subset result a.states }
-          ensures  { subset ns result }
-          ensures  { subset visited result }
-          ensures  { forall f. mem f result -> mem f visited \/ mem f ns \/ (exists i. mem i result /\ mem (i, eps, f) a.transitions) }
-          ensures  { forall i, f. (not mem i visited /\ mem i ns /\ mem (i, eps, f) a.transitions) -> mem f result } (* not mem i visited *)
-          (*ensures  { (not exists f, c. mem f ss /\ mem (f, eps, c) a.transitions) -> result = ns }*)
-        =
-          if is_empty ns then visited
-          else let q = pick ns in
-               union (eclose_n visited q) (fold_eclose visited (remove q ns))
-        in eclose_n empty s
-      end
+    if ST.is_empty a.transitions then Fset.singleton s
+    else eclose_n Seq.empty s a
+    
+  lemma lemma_close_eclose:
+    forall a:automaton, s q r:state.
+      mem s a.states /\ mem q (eclose_df s a) /\ mem (q, eps, r) a.transitions -> mem r (eclose_df s a)
       
   lemma lemma_subset_eclose_df:
     forall a:automaton, s:state, q:state. let ecl = (eclose_df s a) in 
