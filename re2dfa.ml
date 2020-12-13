@@ -59,7 +59,7 @@ let rec regexLang = function
   | Empty -> Language.empty
   | Eps -> Language.singleton [epsilon]
   | Symb a -> Language.singleton [a]
-  | _ -> assert false
+  | _ -> assert false (*SL.iter (fun w -> SL.add w l) SL.add (regexLang { regex = f } )*)
 
 
 (* --- Finite Automaton --- *)

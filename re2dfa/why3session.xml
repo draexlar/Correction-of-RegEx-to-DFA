@@ -459,9 +459,6 @@
   <proof prover="0"><result status="valid" time="0.16"/></proof>
   </goal>
   <goal name="delta_ext&#39;vc.14" expl="postcondition" proved="true">
-  <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1963464"/></proof>
-  <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="delta_ext&#39;vc.14.0" expl="postcondition" proved="true">
    <proof prover="0"><result status="valid" time="0.15"/></proof>
@@ -1799,8 +1796,8 @@
   </goal>
  </transf>
  </goal>
- <goal name="path_on_seq&#39;vc" expl="VC for path_on_seq" proved="true">
- <transf name="split_vc" proved="true" >
+ <goal name="path_on_seq&#39;vc" expl="VC for path_on_seq">
+ <transf name="split_vc" >
   <goal name="path_on_seq&#39;vc.0" expl="precondition" proved="true">
   <proof prover="0" timelimit="5"><result status="valid" time="0.35"/></proof>
   </goal>
@@ -1810,37 +1807,37 @@
   <goal name="path_on_seq&#39;vc.2" expl="precondition" proved="true">
   <proof prover="0" timelimit="5"><result status="valid" time="0.37"/></proof>
   </goal>
-  <goal name="path_on_seq&#39;vc.3" expl="postcondition" proved="true">
-  <transf name="split_vc" proved="true" >
+  <goal name="path_on_seq&#39;vc.3" expl="postcondition">
+  <transf name="split_vc" >
    <goal name="path_on_seq&#39;vc.3.0" expl="postcondition" proved="true">
    <proof prover="0" timelimit="5"><result status="valid" time="0.27"/></proof>
    </goal>
    <goal name="path_on_seq&#39;vc.3.1" expl="postcondition" proved="true">
    <proof prover="0" timelimit="5"><result status="valid" time="0.21"/></proof>
    </goal>
-   <goal name="path_on_seq&#39;vc.3.2" expl="postcondition" proved="true">
-   <transf name="case" proved="true" arg1="(length1 v = 2)">
+   <goal name="path_on_seq&#39;vc.3.2" expl="postcondition">
+   <transf name="case" arg1="(length1 v = 2)">
     <goal name="path_on_seq&#39;vc.3.2.0" expl="true case (postcondition)" proved="true">
     <proof prover="0"><result status="valid" time="0.36"/></proof>
     </goal>
-    <goal name="path_on_seq&#39;vc.3.2.1" expl="false case (postcondition)" proved="true">
-    <transf name="case" proved="true" arg1="(i = 0)">
+    <goal name="path_on_seq&#39;vc.3.2.1" expl="false case (postcondition)">
+    <transf name="case" arg1="(i = 0)">
      <goal name="path_on_seq&#39;vc.3.2.1.0" expl="false case (true case. postcondition)" proved="true">
      <proof prover="0"><result status="valid" time="0.35"/></proof>
      </goal>
-     <goal name="path_on_seq&#39;vc.3.2.1.1" expl="false case (postcondition)" proved="true">
-     <transf name="eliminate_let_fmla" proved="true" >
-      <goal name="path_on_seq&#39;vc.3.2.1.1.0" expl="false case (postcondition)" proved="true">
-      <transf name="instantiate" proved="true" arg1="H4" arg2="i-1">
-       <goal name="path_on_seq&#39;vc.3.2.1.1.0.0" expl="false case (postcondition)" proved="true">
-       <transf name="destruct" proved="true" arg1="Hinst">
+     <goal name="path_on_seq&#39;vc.3.2.1.1" expl="false case (postcondition)">
+     <transf name="eliminate_let_fmla" >
+      <goal name="path_on_seq&#39;vc.3.2.1.1.0" expl="false case (postcondition)">
+      <transf name="instantiate" arg1="H4" arg2="i-1">
+       <goal name="path_on_seq&#39;vc.3.2.1.1.0.0" expl="false case (postcondition)">
+       <transf name="destruct" arg1="Hinst">
         <goal name="path_on_seq&#39;vc.3.2.1.1.0.0.0" expl="destruct premise" proved="true">
-        <proof prover="0" timelimit="5"><result status="valid" time="0.50"/></proof>
-        <proof prover="1"><result status="valid" time="0.28" steps="357454"/></proof>
-        <proof prover="2"><result status="valid" time="0.12" steps="148"/></proof>
+        <proof prover="0" timelimit="5"><result status="valid" time="1.44"/></proof>
+        <proof prover="1"><result status="valid" time="0.41" steps="452932"/></proof>
+        <proof prover="2"><result status="valid" time="0.12" steps="258"/></proof>
         </goal>
-        <goal name="path_on_seq&#39;vc.3.2.1.1.0.0.1" expl="false case (postcondition)" proved="true">
-        <proof prover="0" timelimit="5"><result status="valid" time="0.76"/></proof>
+        <goal name="path_on_seq&#39;vc.3.2.1.1.0.0.1" expl="false case (postcondition)">
+        <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
         </goal>
        </transf>
        </goal>
@@ -1857,19 +1854,21 @@
    </goal>
   </transf>
   </goal>
+  <goal name="path_on_seq&#39;vc.4" expl="postcondition">
+  </goal>
  </transf>
  </goal>
  <goal name="lemma_sub_path_seq">
- <proof prover="0"><result status="timeout" time="1.00"/></proof>
- <proof prover="1" timelimit="1"><result status="highfailure" time="0.70" steps="880537"/></proof>
- <proof prover="2" timelimit="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <proof prover="1" timelimit="1" obsolete="true"><result status="highfailure" time="0.70" steps="880537"/></proof>
+ <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
  <transf name="split_vc" >
   <goal name="lemma_sub_path_seq.0">
   <transf name="assert" arg1="( v ==&#39; (snoc v q)[..length1 (snoc v q)-1] )">
    <goal name="lemma_sub_path_seq.0.0" expl="asserted formula" proved="true">
-   <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
+   <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
    <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1675006"/></proof>
-   <proof prover="2"><result status="valid" time="2.25" steps="4812"/></proof>
+   <proof prover="2"><result status="valid" time="2.25" steps="4809"/></proof>
    </goal>
    <goal name="lemma_sub_path_seq.0.1">
    <transf name="assert" arg1="( forall i. 0 &lt;= i &lt; length1 v -&gt; v[i] = (snoc v q)[i] )">
@@ -1907,56 +1906,56 @@
             <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
             </goal>
             <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.0.1" proved="true">
-            <proof prover="0" timelimit="5"><result status="valid" time="1.52"/></proof>
+            <proof prover="0" timelimit="5"><result status="valid" time="1.83"/></proof>
             </goal>
            </transf>
            </goal>
            <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1">
-           <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-           <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="16708993"/></proof>
-           <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+           <proof prover="0" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
+           <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="16708993"/></proof>
+           <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
            <transf name="assert" arg1="(path_on_seq (snoc v q)[1..length1 (snoc v q) - 1] a)">
             <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.0" expl="asserted formula">
-            <proof prover="0" timelimit="10" memlimit="4000"><result status="timeout" time="10.00"/></proof>
-            <proof prover="1" timelimit="10" memlimit="4000"><result status="timeout" time="10.00" steps="5392105"/></proof>
-            <proof prover="2" timelimit="10" memlimit="4000"><result status="timeout" time="10.00"/></proof>
+            <proof prover="0" timelimit="10" memlimit="4000" obsolete="true"><result status="timeout" time="10.00"/></proof>
+            <proof prover="1" timelimit="10" memlimit="4000" obsolete="true"><result status="timeout" time="10.00" steps="5392105"/></proof>
+            <proof prover="2" timelimit="10" memlimit="4000" obsolete="true"><result status="timeout" time="10.00"/></proof>
             </goal>
             <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.1">
-            <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-            <proof prover="1"><result status="timeout" time="5.00" steps="4673722"/></proof>
-            <proof prover="2"><result status="timeout" time="5.00"/></proof>
+            <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="4673722"/></proof>
+            <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
             </goal>
            </transf>
            <transf name="assert" arg1="(path_on_seq v[1..] a)">
             <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.0" expl="asserted formula" proved="true">
-            <proof prover="0" timelimit="5"><result status="valid" time="2.02"/></proof>
+            <proof prover="0" timelimit="5"><result status="valid" time="3.20"/></proof>
             </goal>
             <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.1">
-            <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-            <proof prover="1"><result status="timeout" time="5.00" steps="4513210"/></proof>
-            <proof prover="2"><result status="timeout" time="5.00"/></proof>
+            <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+            <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="4513210"/></proof>
+            <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
             <transf name="assert" arg1="(path_on_seq (snoc v q)[1..length1 (snoc v q) - 1] a)">
              <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.1.0" expl="asserted formula">
-             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
-             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="15865264"/></proof>
-             <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+             <proof prover="0" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00" steps="15865264"/></proof>
+             <proof prover="2" timelimit="30" memlimit="4000" obsolete="true"><result status="timeout" time="30.00"/></proof>
              </goal>
              <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.1.1">
-             <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-             <proof prover="1"><result status="timeout" time="5.00" steps="4657082"/></proof>
-             <proof prover="2"><result status="timeout" time="5.00"/></proof>
+             <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+             <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="4657082"/></proof>
+             <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
              </goal>
             </transf>
             <transf name="assert" arg1="(path_on_seq (snoc v q)[1..length1 v] a)">
              <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.1.0" expl="asserted formula">
-             <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-             <proof prover="1"><result status="timeout" time="5.00" steps="3156509"/></proof>
-             <proof prover="2"><result status="timeout" time="5.00"/></proof>
+             <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+             <proof prover="1" obsolete="true"><result status="timeout" time="5.00" steps="3156509"/></proof>
+             <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
              </goal>
              <goal name="lemma_sub_path_seq.0.1.1.1.0.0.1.0.0.1.1.1">
-             <proof prover="0" timelimit="10" memlimit="4000"><result status="timeout" time="10.00"/></proof>
-             <proof prover="1" timelimit="10" memlimit="4000"><undone/></proof>
-             <proof prover="2" timelimit="10" memlimit="4000"><result status="timeout" time="10.00"/></proof>
+             <proof prover="0" timelimit="10" memlimit="4000" obsolete="true"><result status="timeout" time="10.00"/></proof>
+             <proof prover="1" timelimit="10" memlimit="4000" obsolete="true"><result status="failure" time="0.00"/></proof>
+             <proof prover="2" timelimit="10" memlimit="4000" obsolete="true"><result status="timeout" time="10.00"/></proof>
              </goal>
             </transf>
             </goal>
@@ -1997,14 +1996,14 @@
        <goal name="lemma_sub_path_seq.0.0.0.1.0.0" expl="destruct premise">
        <transf name="split_vc" >
         <goal name="lemma_sub_path_seq.0.0.0.1.0.0.0" proved="true">
-        <proof prover="0" timelimit="5"><result status="valid" time="3.60"/></proof>
+        <proof prover="0" timelimit="5"><result status="valid" time="2.74"/></proof>
         <proof prover="1" obsolete="true"><result status="highfailure" time="4.04" steps="3194756"/></proof>
         <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
         </goal>
         <goal name="lemma_sub_path_seq.0.0.0.1.0.0.1">
-        <proof prover="0" timelimit="5"><result status="timeout" time="5.00"/></proof>
-        <proof prover="1"><result status="highfailure" time="3.64" steps="3009622"/></proof>
-        <proof prover="2"><result status="timeout" time="5.00"/></proof>
+        <proof prover="0" timelimit="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
+        <proof prover="1" obsolete="true"><result status="highfailure" time="3.64" steps="3009622"/></proof>
+        <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
         </goal>
        </transf>
        </goal>
@@ -2024,9 +2023,9 @@
  </transf>
  </goal>
  <goal name="eclose_n&#39;vc" expl="VC for eclose_n">
- <proof prover="0"><result status="timeout" time="1.00"/></proof>
- <proof prover="1" timelimit="1"><result status="highfailure" time="0.57" steps="737622"/></proof>
- <proof prover="2" timelimit="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
+ <proof prover="1" timelimit="1" obsolete="true"><result status="highfailure" time="0.57" steps="737622"/></proof>
+ <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
  <transf name="split_vc" >
   <goal name="eclose_n&#39;vc.0" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.21"/></proof>
@@ -2040,10 +2039,10 @@
   <proof prover="0"><result status="valid" time="0.21"/></proof>
   </goal>
   <goal name="eclose_n&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.92"/></proof>
+  <proof prover="0"><result status="valid" time="0.62"/></proof>
   </goal>
   <goal name="eclose_n&#39;vc.4" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.39"/></proof>
+  <proof prover="0"><result status="valid" time="0.23"/></proof>
   </goal>
   <goal name="eclose_n&#39;vc.5" expl="precondition" proved="true">
   <transf name="assert" proved="true" arg1="( visited ==&#39; (empty1: seq int) \/
@@ -2056,8 +2055,11 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
    <goal name="eclose_n&#39;vc.5.1" expl="precondition" proved="true">
    <transf name="destruct" proved="true" arg1="h">
     <goal name="eclose_n&#39;vc.5.1.0" expl="precondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.40"/></proof>
+    </goal>
+    <goal name="eclose_n&#39;vc.5.1.1" expl="precondition" proved="true">
     <transf name="eliminate_let_fmla" proved="true" >
-     <goal name="eclose_n&#39;vc.5.1.0.0" expl="precondition" proved="true">
+     <goal name="eclose_n&#39;vc.5.1.1.0" expl="precondition" proved="true">
      <proof prover="0" timelimit="5"><result status="valid" time="0.40"/></proof>
      <transf name="destruct" arg1="h">
       <goal name="eclose_n&#39;vc.5.1.1.0.0" expl="precondition">
@@ -2065,9 +2067,6 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
      </transf>
      </goal>
     </transf>
-    </goal>
-    <goal name="eclose_n&#39;vc.5.1.1" expl="precondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.40"/></proof>
     </goal>
    </transf>
    </goal>
@@ -2077,7 +2076,7 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
   <proof prover="0"><result status="valid" time="0.27"/></proof>
   </goal>
   <goal name="eclose_n&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.93"/></proof>
+  <proof prover="0"><result status="valid" time="0.67"/></proof>
   </goal>
   <goal name="eclose_n&#39;vc.8" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.97"/></proof>
@@ -2097,7 +2096,7 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
   </transf>
   </goal>
   <goal name="eclose_n&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.53"/></proof>
+  <proof prover="0"><result status="valid" time="0.36"/></proof>
   </goal>
   <goal name="eclose_n&#39;vc.11" expl="postcondition">
   <proof prover="0" obsolete="true"><result status="timeout" time="2.00"/></proof>
@@ -2139,10 +2138,10 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
   <proof prover="0" timelimit="5"><result status="valid" time="0.14"/></proof>
   </goal>
   <goal name="fold_eclose&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.71"/></proof>
+  <proof prover="0"><result status="valid" time="0.50"/></proof>
   </goal>
   <goal name="fold_eclose&#39;vc.11" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.78"/></proof>
+  <proof prover="0"><result status="valid" time="0.49"/></proof>
   </goal>
   <goal name="fold_eclose&#39;vc.12" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.49"/></proof>
@@ -2156,7 +2155,7 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
    <proof prover="0"><result status="valid" time="0.30"/></proof>
    </goal>
    <goal name="fold_eclose&#39;vc.13.1" expl="postcondition" proved="true">
-   <proof prover="0" timelimit="5"><result status="valid" time="3.23"/></proof>
+   <proof prover="0" timelimit="5"><result status="valid" time="2.19"/></proof>
    <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1683693"/></proof>
    <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
    </goal>
@@ -2164,7 +2163,7 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
   </goal>
   <goal name="fold_eclose&#39;vc.14" expl="postcondition" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="1.00"/></proof>
-  <proof prover="2" timelimit="1"><result status="valid" time="1.37" steps="2692"/></proof>
+  <proof prover="2" timelimit="1"><result status="valid" time="1.01" steps="2695"/></proof>
   </goal>
  </transf>
  </goal>
@@ -2222,29 +2221,29 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
  </goal>
  <goal name="eclose_df&#39;vc" expl="VC for eclose_df">
  <transf name="split_vc" >
-  <goal name="eclose_df&#39;vc.0" expl="precondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.19"/></proof>
+  <goal name="eclose_df&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.19"/></proof>
   </goal>
-  <goal name="eclose_df&#39;vc.1" expl="precondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.42"/></proof>
+  <goal name="eclose_df&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.42"/></proof>
   </goal>
   <goal name="eclose_df&#39;vc.2" expl="precondition">
   </goal>
   <goal name="eclose_df&#39;vc.3" expl="precondition">
   </goal>
-  <goal name="eclose_df&#39;vc.4" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.62"/></proof>
+  <goal name="eclose_df&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.44"/></proof>
   </goal>
-  <goal name="eclose_df&#39;vc.5" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.42"/></proof>
+  <goal name="eclose_df&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.42"/></proof>
   </goal>
-  <goal name="eclose_df&#39;vc.6" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.69"/></proof>
+  <goal name="eclose_df&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.43"/></proof>
   </goal>
   <goal name="eclose_df&#39;vc.7" expl="postcondition">
   <transf name="split_vc" >
-   <goal name="eclose_df&#39;vc.7.0" expl="postcondition">
-   <proof prover="0" obsolete="true"><result status="valid" time="0.26"/></proof>
+   <goal name="eclose_df&#39;vc.7.0" expl="postcondition" proved="true">
+   <proof prover="0"><result status="valid" time="0.26"/></proof>
    </goal>
    <goal name="eclose_df&#39;vc.7.1" expl="postcondition">
    <transf name="eliminate_let_fmla" >
@@ -2283,15 +2282,15 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
    </goal>
   </transf>
   </goal>
-  <goal name="eclose_df&#39;vc.8" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.14"/></proof>
+  <goal name="eclose_df&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.14"/></proof>
   </goal>
  </transf>
  </goal>
- <goal name="lemma_close_eclose">
- <transf name="split_vc" >
-  <goal name="lemma_close_eclose.0">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.36"/></proof>
+ <goal name="lemma_close_eclose" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="lemma_close_eclose.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.36"/></proof>
   <proof prover="1" timelimit="1" obsolete="true"><result status="timeout" time="1.00" steps="1520347"/></proof>
   <proof prover="2" timelimit="1" obsolete="true"><result status="timeout" time="1.00"/></proof>
   </goal>
@@ -2307,8 +2306,8 @@ wf_visited visited[..length1 visited - 1] q1 a) )">
     <transf name="destruct_term_subst" arg1="ecl">
      <goal name="lemma_subset_eclose_df.0.0.0.0">
      <transf name="case" arg1="(q = s)">
-      <goal name="lemma_subset_eclose_df.0.0.0.0.0" expl="true case">
-      <proof prover="0" obsolete="true"><result status="valid" time="0.31"/></proof>
+      <goal name="lemma_subset_eclose_df.0.0.0.0.0" expl="true case" proved="true">
+      <proof prover="0"><result status="valid" time="0.31"/></proof>
       </goal>
       <goal name="lemma_subset_eclose_df.0.0.0.0.1" expl="false case">
       <transf name="replace" arg1="(eclose_df s a)" arg2="(eclose_n (Nil: list int) s a)">
