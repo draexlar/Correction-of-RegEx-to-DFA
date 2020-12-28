@@ -59,7 +59,7 @@ let rec regexLang = function
   | Empty -> Language.empty
   | Eps -> Language.singleton [epsilon]
   | Symb a -> Language.singleton [a]
-  | _ -> assert false
+  | _ -> assert false (*SL.iter (fun w -> SL.add w l) SL.add (regexLang { regex = f } )*)
 
 
 (* --- Finite Automaton --- *)
@@ -158,6 +158,22 @@ let delta s w a =
   let n = Transitions.filter (fun (a,b,c) -> s = a && w = b) a in
     delta_get_3rd n
 
+(* depth-first implementation of eclose *)
+let eclose_df s t =
+  let rec eclose_n visited q =
+    if not (States.mem q visited) then 
+      begin
+        let ns = (delta q epsilon t) in
+        fold_eclose (States.add q visited) ns
+      end
+    else visited
+  and fold_eclose visited ns =
+    if States.is_empty ns then visited
+    else let q = States.choose ns in
+         States.union (eclose_n visited q) (fold_eclose visited (States.remove q ns))
+  in eclose_n States.empty s
+
+
 (* extended transition function *)
 let rec delta_ext s w a =
   match w with
@@ -187,4 +203,4 @@ let ex0 = List.fold_right Transitions.add [ ("1", epsilon, "2"); ("1", epsilon, 
 
 let ex1 = List.fold_right Transitions.add [ ("1", epsilon, "3"); ("2", epsilon, "4"); ("2", epsilon, "5"); ("3", epsilon, "6"); ("3", epsilon, "7"); ("6", epsilon, "2"); ("7", epsilon, "1") ] Transitions.empty
 
-let () = print_states (eclose "1" ex1); print_newline ()
+let () = print_states (eclose "1" ex0); print_newline ()

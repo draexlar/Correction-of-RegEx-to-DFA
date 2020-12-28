@@ -338,7 +338,7 @@ module NFA
 
   (* States that if the start state of an automaton is productive and not final, than there is a transition from that state. *)
   lemma lemma_trans_from_start:
-    forall a: automaton. productive a.start a /\ not (mem a.start a.finalStates) /\ cardinal a.transitions > 0 -> exists x, q. mem (a.start, x, q) a.transitions
+    forall a: automaton. cardinal a.transitions > 0 /\ productive a.start a /\ not (mem a.start a.finalStates) -> exists x, q. mem (a.start, x, q) a.transitions
 
 
   (* --- Compile automaton --- *)
