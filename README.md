@@ -1,7 +1,8 @@
 # A Mechanized Proof of Kleene's Theorem in Why3
 
-This reposotory contains the OCaml and WhyML files developed during the course of the poof of correction of the translation from Regular Expressions to Finite Automata.
+This reposotory contains the OCaml and WhyML files developed during the course of the poof of correction of the translation from Regular Expressions to Finite Automata, developed in the scope of the Master Thesis "A Mechanized Proof of Kleene's Theorem in Why3" by André Trindade, in December of 2020.
 
+The submitted dissertation document is made available in this repository in **Master_Thesis_ATrindade.pdf**, as well as its presentation, **Presentation.pdf**.
 
 ## Files & Folders
 This development resultude in three types of files: **.ml**, **.mlw** and **.bak**. These, respectively, stand for OCaml files, WhyML files and Why3 backup files.
